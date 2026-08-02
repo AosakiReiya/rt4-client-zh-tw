@@ -833,6 +833,20 @@ public final class JagString implements StringInterface {
 			throw new IllegalArgumentException();
 		} else {
 			@Pc(30) int local30;
+			if (this.unicode != null) {
+				if (arg0 > this.unicode.length) {
+					for (local30 = 1; local30 < arg0; local30 += local30) {
+					}
+					char[] bigger = new char[local30];
+					System.arraycopy(this.unicode, 0, bigger, 0, this.length);
+					this.unicode = bigger;
+				}
+				for (local30 = this.length; local30 < arg0; local30++) {
+					this.unicode[local30] = 32;
+				}
+				this.length = arg0;
+				return;
+			}
 			if (arg0 > this.chars.length) {
 				for (local30 = 1; local30 < arg0; local30 += local30) {
 				}

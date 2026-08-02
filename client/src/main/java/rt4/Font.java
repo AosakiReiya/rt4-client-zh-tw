@@ -282,9 +282,9 @@ public abstract class Font extends SecondaryNode {
 						// CJK/Unicode 字元：改走 AWT 渲染
 						if (GlRenderer.enabled) {
 							// OpenGL 模式下無 SoftwareRaster 可用，改用空字寬處理
-							arg1 += CJKRenderer.charWidth(local22);
+							arg1 += CJKRenderer.charWidth(local22, this.lineHeight);
 						} else {
-							arg1 += CJKRenderer.drawGlyph(local22, arg1, local4 + this.lineHeight);
+							arg1 += CJKRenderer.drawGlyph(local22, arg1, local4 + this.lineHeight, this.lineHeight);
 						}
 						local8 = local22;
 						continue;
@@ -408,7 +408,7 @@ public abstract class Font extends SecondaryNode {
 				}
 				if (local5 == -1) {
 					if (local23 > 255) {
-						local9 += CJKRenderer.charWidth(local23);
+						local9 += CJKRenderer.charWidth(local23, this.lineHeight);
 						local7 = local23;
 						continue;
 					}
@@ -487,7 +487,7 @@ public abstract class Font extends SecondaryNode {
 	@OriginalMember(owner = "client!rk", name = "d", descriptor = "(I)I")
 	private int getGlyphWidth(@OriginalArg(0) int arg0) {
 		if (arg0 > 255) {
-			return CJKRenderer.charWidth(arg0);
+			return CJKRenderer.charWidth(arg0, this.lineHeight);
 		}
 		return this.glyphWidths[arg0 & 0xFF];
 	}
@@ -981,9 +981,9 @@ public abstract class Font extends SecondaryNode {
 					if (local24 > 255) {
 						// CJK/Unicode 字元：改走 AWT 渲染
 						if (GlRenderer.enabled) {
-							arg1 += CJKRenderer.charWidth(local24);
+							arg1 += CJKRenderer.charWidth(local24, this.lineHeight);
 						} else {
-							arg1 += CJKRenderer.drawGlyph(local24, arg1, local4 + this.lineHeight);
+							arg1 += CJKRenderer.drawGlyph(local24, arg1, local4 + this.lineHeight, this.lineHeight);
 						}
 						local8 = local24;
 						continue;
