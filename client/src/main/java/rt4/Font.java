@@ -278,6 +278,17 @@ public abstract class Font extends SecondaryNode {
 					}
 				}
 				if (local6 == -1) {
+					if (local22 > 255) {
+						// CJK/Unicode 字元：改走 AWT 渲染
+						if (GlRenderer.enabled) {
+							// OpenGL 模式下無 SoftwareRaster 可用，改用空字寬處理
+							arg1 += CJKRenderer.charWidth(local22);
+						} else {
+							arg1 += CJKRenderer.drawGlyph(local22, arg1, local4 + this.lineHeight);
+						}
+						local8 = local22;
+						continue;
+					}
 					if (this.kerning != null && local8 != 0) {
 						arg1 += this.kerning[(local8 << 8) + local22];
 					}
@@ -396,6 +407,11 @@ public abstract class Font extends SecondaryNode {
 					}
 				}
 				if (local5 == -1) {
+					if (local23 > 255) {
+						local9 += CJKRenderer.charWidth(local23);
+						local7 = local23;
+						continue;
+					}
 					local9 += this.glyphWidths[local23];
 					if (this.kerning != null && local7 != 0) {
 						local9 += this.kerning[(local7 << 8) + local23];
@@ -470,6 +486,9 @@ public abstract class Font extends SecondaryNode {
 
 	@OriginalMember(owner = "client!rk", name = "d", descriptor = "(I)I")
 	private int getGlyphWidth(@OriginalArg(0) int arg0) {
+		if (arg0 > 255) {
+			return CJKRenderer.charWidth(arg0);
+		}
 		return this.glyphWidths[arg0 & 0xFF];
 	}
 
@@ -600,8 +619,8 @@ public abstract class Font extends SecondaryNode {
 				if (local19 == -1) {
 					if (local37 != 0) {
 						buffer.append(local37);
-						local9 += this.glyphWidths[local37];
-						if (this.kerning != null && local21 != 0) {
+						local9 += this.getGlyphWidth(local37);
+						if (this.kerning != null && local21 != 0 && local37 <= 255) {
 							local9 += this.kerning[(local21 << 8) + local37];
 						}
 						local21 = local37;
@@ -959,6 +978,16 @@ public abstract class Font extends SecondaryNode {
 					}
 				}
 				if (local6 == -1) {
+					if (local24 > 255) {
+						// CJK/Unicode 字元：改走 AWT 渲染
+						if (GlRenderer.enabled) {
+							arg1 += CJKRenderer.charWidth(local24);
+						} else {
+							arg1 += CJKRenderer.drawGlyph(local24, arg1, local4 + this.lineHeight);
+						}
+						local8 = local24;
+						continue;
+					}
 					if (this.kerning != null && local8 != 0) {
 						arg1 += this.kerning[(local8 << 8) + local24];
 					}
