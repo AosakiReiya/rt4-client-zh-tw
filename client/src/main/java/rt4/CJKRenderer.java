@@ -19,6 +19,19 @@ public final class CJKRenderer {
 	/** CJK 字元縮放係數（調整中文字與點陣字型的視覺比例，1.0 = 與點陣行高一致）。 */
 	private static final double CJK_SCALE = 1.0;
 
+	/** 大字型（lineHeight > 此值）的額外縮小係數：拉丁點陣字只佔約 60% 行高，中文全形字過大。 */
+	private static final int LARGE_FONT_THRESHOLD = 14;
+	private static final double LARGE_FONT_SCALE = 0.6;
+
+	/** 計算 CJK 字元渲染尺寸：大字型（主選單按鈕等）額外縮小，避免中文超過按鈕文字區。 */
+	private static int computeScaledSize(int fontSize) {
+		double scale = CJK_SCALE;
+		if (fontSize > LARGE_FONT_THRESHOLD) {
+			scale = CJK_SCALE * LARGE_FONT_SCALE;
+		}
+		return Math.max(6, (int) (fontSize * scale));
+	}
+
 	/** 依字型大小快取的 Font 與 GlyphImage。 */
 	private static final Map<Integer, java.awt.Font> FONTS_BY_SIZE = new HashMap<>();
 	private static final Map<Integer, GlyphBuffer> BUFFERS_BY_SIZE = new HashMap<>();
@@ -187,7 +200,7 @@ public final class CJKRenderer {
 		if (fontSize <= 0) {
 			fontSize = 12;
 		}
-		int scaledSize = Math.max(6, (int) (fontSize * CJK_SCALE));
+		int scaledSize = computeScaledSize(fontSize);
 		int bufferSize = scaledSize + GLYPH_PADDING;
 		GlyphBuffer buf = BUFFERS_BY_SIZE.get(Integer.valueOf(scaledSize));
 		if (buf == null) {
@@ -240,7 +253,7 @@ public final class CJKRenderer {
 		if (fontSize <= 0) {
 			fontSize = 12;
 		}
-		int scaledSize = Math.max(6, (int) (fontSize * CJK_SCALE));
+		int scaledSize = computeScaledSize(fontSize);
 		int bufferSize = scaledSize + GLYPH_PADDING;
 		GlyphBuffer buf = BUFFERS_BY_SIZE.get(Integer.valueOf(scaledSize));
 		if (buf == null) {
@@ -327,7 +340,7 @@ public final class CJKRenderer {
 		if (fontSize <= 0) {
 			fontSize = 12;
 		}
-		int scaledSize = Math.max(6, (int) (fontSize * CJK_SCALE));
+		int scaledSize = computeScaledSize(fontSize);
 		Graphics2D g = BUFFERS_BY_SIZE.computeIfAbsent(Integer.valueOf(scaledSize), GlyphBuffer::new).g;
 		g.setFont(fontFor(scaledSize));
 		FontMetrics fm = g.getFontMetrics();
