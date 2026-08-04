@@ -3312,9 +3312,9 @@ public class Protocol {
 			if (local7 > 32767) {
 				local7 = 32767;
 			}
-			// 聊天訊息現以 UTF-8 明文傳輸（伺服器 PlayerFlags530 廣播改為不壓縮），
+			// 聊天訊息以 UTF-8 明文傳輸（伺服器 PlayerFlags530 廣播 UTF-8），
 			// 直接讀取指定長度的 UTF-8 bytes 解碼，支援中文。
-			byte[] local15 = new byte[local7];
+			@Pc(15) byte[] local15 = new byte[local7];
 			System.arraycopy(arg0.data, arg0.offset, local15, 0, local7);
 			arg0.offset += local7;
 			return JagString.decodeString(local15, local7, 0);

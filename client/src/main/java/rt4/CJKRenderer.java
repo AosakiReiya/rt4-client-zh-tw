@@ -206,7 +206,7 @@ public final class CJKRenderer {
 		if (charWidth <= 0) {
 			charWidth = scaledSize;
 		}
-		g.drawString(ch, GLYPH_PADDING, scaledSize);
+		g.drawString(ch, 0, scaledSize);
 
 		int[] src = new int[bufferSize * bufferSize];
 		buf.image.getRGB(0, 0, bufferSize, bufferSize, src, 0, bufferSize);
@@ -258,7 +258,7 @@ public final class CJKRenderer {
 		if (charWidth <= 0) {
 			charWidth = scaledSize;
 		}
-		g.drawString(new String(Character.toChars(codepoint)), GLYPH_PADDING, scaledSize);
+		g.drawString(new String(Character.toChars(codepoint)), 0, scaledSize);
 		int[] src = new int[bufferSize * bufferSize];
 		buf.image.getRGB(0, 0, bufferSize, bufferSize, src, 0, bufferSize);
 		return drawGlyphSoftwareToRaster(codepoint, x, baselineY, fontSize, fm, src, bufferSize, charWidth);
