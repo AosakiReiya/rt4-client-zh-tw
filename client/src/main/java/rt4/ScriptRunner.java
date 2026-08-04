@@ -2422,8 +2422,17 @@ public final class ScriptRunner {
 								if (opcode == Cs2Opcodes.setText) {
 									ssp--;
 									str1 = stringStack[ssp];
-									// CS2 operand 是英文原文；setText 是顯示落點，套 CacheTranslation 避免覆蓋中文為英文
-									str1 = JagString.parse(CacheTranslation.translate(str1.toString()));
+									// 密碼顯示元件（登入 0x2E8015A、建號 0x2E801A5/0x2E801AA）：強制遮蔽為 *
+									int setTextId = component.id;
+									if (setTextId == 0x2E8015A || setTextId == 0x2E801A5 || setTextId == 0x2E801AA) {
+										int pwdLen = str1.length();
+										StringBuilder sb = new StringBuilder(pwdLen);
+										for (int pi = 0; pi < pwdLen; pi++) sb.append('*');
+										str1 = JagString.parse(sb.toString());
+									} else {
+										// CS2 operand 是英文原文；setText 是顯示落點，套 CacheTranslation 避免覆蓋中文為英文
+										str1 = JagString.parse(CacheTranslation.translate(str1.toString()));
+									}
 									if (!str1.strEquals(component.text)) {
 										component.text = str1;
 										InterfaceList.redraw(component);

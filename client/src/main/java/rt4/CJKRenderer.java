@@ -20,7 +20,7 @@ public final class CJKRenderer {
 	private static final double CJK_SCALE = 1.0;
 
 	/** 大字型（lineHeight > 此值）的額外縮小係數：拉丁點陣字只佔約 60% 行高，中文全形字過大。 */
-	private static final int LARGE_FONT_THRESHOLD = 14;
+	private static final int LARGE_FONT_THRESHOLD = 16;
 	private static final double LARGE_FONT_SCALE = 0.6;
 
 	/** 計算 CJK 字元渲染尺寸：大字型（主選單按鈕等）額外縮小，避免中文超過按鈕文字區。 */
@@ -47,9 +47,10 @@ public final class CJKRenderer {
 			this.size = size;
 			this.image = new BufferedImage(size + GLYPH_PADDING, size + GLYPH_PADDING, BufferedImage.TYPE_INT_ARGB);
 			this.g = image.createGraphics();
-			this.g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
-			this.g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-			this.g.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
+			// 開啟文字抗鋸齒：小尺寸中文字筆畫更平滑清晰（尤其 lineHeight ≤14 的小字型）
+			this.g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			this.g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			this.g.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
 		}
 	}
 
