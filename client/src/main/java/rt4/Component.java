@@ -1218,4 +1218,21 @@ public final class Component {
 		}
 		return local21;
 	}
+
+	/**
+	 * 回傳本元件的「有效點擊寬度」：若為 type=4 文字且含 CJK，取文字實際渲染寬度；
+	 * 否則回傳 component.width。供 method946 / renderComponent 擴展熱區用（中文字符可點擊）。
+	 */
+	public final int getHitWidth(IndexedSprite[] arg0) {
+		if (this.type == 4 && this.text != null && this.font != -1) {
+			Font localFont = this.method491(arg0);
+			if (localFont != null) {
+				int textWidth = localFont.getStringWidth(this.text);
+				if (textWidth > this.width) {
+					return textWidth;
+				}
+			}
+		}
+		return this.width;
+	}
 }

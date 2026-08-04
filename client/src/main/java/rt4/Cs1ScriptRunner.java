@@ -366,7 +366,7 @@ public class Cs1ScriptRunner {
 					} else {
 						local164 = local114 > arg6 ? local114 : arg6;
 						local166 = arg0 < local123 ? local123 : arg0;
-						local270 = component.width + local123;
+						local270 = component.getHitWidth(Sprites.nameIcons) + local123;
 						local276 = local114 + component.height;
 						if (component.type == 9) {
 							local276++;

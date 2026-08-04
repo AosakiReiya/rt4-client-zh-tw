@@ -2422,6 +2422,8 @@ public final class ScriptRunner {
 								if (opcode == Cs2Opcodes.setText) {
 									ssp--;
 									str1 = stringStack[ssp];
+									// CS2 operand 是英文原文；setText 是顯示落點，套 CacheTranslation 避免覆蓋中文為英文
+									str1 = JagString.parse(CacheTranslation.translate(str1.toString()));
 									if (!str1.strEquals(component.text)) {
 										component.text = str1;
 										InterfaceList.redraw(component);

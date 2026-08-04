@@ -654,18 +654,18 @@ public class InterfaceList {
 					local67 = local78 < arg5 ? local78 : arg5;
 				}
 				// CJK：中文字元寬度約為英文 2 倍，超出 component.width 熱區時點擊無效。
-				// 依文字實際寬度擴展熱區右邊界，使中文字符可點擊（不影響版面）。
-				if (component.type == 4 && component.text != null && component.font != -1) {
-					Font localFont = component.method491(Sprites.nameIcons);
-					if (localFont != null) {
-						int textWidth = localFont.getStringWidth(component.text);
-						int rightBound = local50 + textWidth + 2;
-						if (rightBound > local65) {
-							local65 = rightBound < arg4 ? rightBound : arg4;
-						}
-						if (local50 < local61) {
-							local61 = local50;
-						}
+				// 依文字實際寬度擴展熱區（左右兩側，考慮 halign 置中），使中文字符可點擊。
+				int hitW = component.getHitWidth(Sprites.nameIcons);
+				if (hitW > component.width) {
+					int overflow = hitW - component.width;
+					int overflowLeft = component.halign == 1 ? overflow / 2 : 0;
+					int leftBound = local50 - overflowLeft;
+					int rightBound = local50 + component.width + (overflow - overflowLeft) + 2;
+					if (leftBound < local61) {
+						local61 = leftBound > arg2 ? leftBound : arg2;
+					}
+					if (rightBound > local65) {
+						local65 = rightBound < arg4 ? rightBound : arg4;
 					}
 				}
 				if (component == Cs1ScriptRunner.aClass13_14) {
