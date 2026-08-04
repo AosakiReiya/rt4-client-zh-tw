@@ -1041,7 +1041,14 @@ public class WorldMap {
 	@OriginalMember(owner = "client!rc", name = "a", descriptor = "(Lclient!na;Z)Lclient!na;")
 	public static JagString method923(@OriginalArg(0) JagString arg0) {
 		@Pc(12) int local12 = method3218(arg0);
-		return local12 == -1 ? aClass100_517 : labels.aClass100Array153[local12].method3140(aClass100_538, aClass100_872);
+		if (local12 == -1) {
+			// 原版行為：不匹配回傳空字串（腳本跳過 setText，框維持原樣）
+			return aClass100_517;
+		}
+		if (labels.aClass100ArrayEng != null) {
+			return labels.aClass100ArrayEng[local12];
+		}
+		return labels.aClass100Array153[local12].method3140(aClass100_538, aClass100_872);
 	}
 
 	@OriginalMember(owner = "client!rg", name = "d", descriptor = "(B)Lclient!bn;")
@@ -1804,9 +1811,16 @@ public class WorldMap {
 		if (labels == null || arg0.length() == 0) {
 			return -1;
 		}
+		// 用原始英文 label 做前綴匹配（原版語義）：輸入「varrock」命中「Varrock」
 		for (@Pc(20) int local20 = 0; local20 < labels.anInt5074; local20++) {
-			if (labels.aClass100Array153[local20].method3140(aClass100_538, aClass100_872).method3142(arg0)) {
-				return local20;
+			if (labels.aClass100ArrayEng != null) {
+				if (labels.aClass100ArrayEng[local20].method3142(arg0)) {
+					return local20;
+				}
+			} else {
+				if (labels.aClass100Array153[local20].method3140(aClass100_538, aClass100_872).method3142(arg0)) {
+					return local20;
+				}
 			}
 		}
 		return -1;

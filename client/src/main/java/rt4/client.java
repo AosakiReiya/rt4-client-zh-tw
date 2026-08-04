@@ -236,6 +236,19 @@ public final class client extends GameShell {
         }
       }
 
+      // 過濾掉 --config 與其路徑，保留純位置參數（worldListId modeWhat language game）
+      {
+        java.util.ArrayList<String> filtered = new java.util.ArrayList<String>();
+        for (int i = 0; i < arg0.length; i++) {
+          if ("--config".equals(arg0[i])) {
+            i++; // 跳過 --config 的值
+          } else if (!"--help".equals(arg0[i])) {
+            filtered.add(arg0[i]);
+          }
+        }
+        arg0 = filtered.toArray(new String[0]);
+      }
+
       if (helpRequested) {
         System.out.println("Usage: java path-to-jar.jra [--config <path>] [--help]");
         System.out.println("Custom Options:");
@@ -260,7 +273,7 @@ public final class client extends GameShell {
 				arg0 = new String[4];
 				arg0[0] = "1";
 				arg0[1] = "live";
-				arg0[2] = "english";
+				arg0[2] = "chinese";
 				arg0[3] = "game0";
 				// Static131.method2577("argument count");
 			}
@@ -291,6 +304,10 @@ public final class client extends GameShell {
 				language = 0;
 			} else if (arg0[2].equals("german")) {
 				language = 1;
+			} else if (arg0[2].equals("french")) {
+				language = 2;
+			} else if (arg0[2].equals("chinese")) {
+				language = 3;
 			} else {
 				printUsage("language");
 			}

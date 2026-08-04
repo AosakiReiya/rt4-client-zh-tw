@@ -28,6 +28,9 @@ public final class WorldMapFont {
 	@OriginalMember(owner = "client!fd", name = "b", descriptor = "Z")
 	private boolean grayscale;
 
+	/** AWT 字型大小（Helvetica Bold），供中文字元經 CJKRenderer 以同尺寸渲染。 */
+	private int fontSize;
+
 	@OriginalMember(owner = "client!fd", name = "a", descriptor = "[B")
 	private byte[] data = new byte[100000];
 
@@ -45,6 +48,7 @@ public final class WorldMapFont {
 	public WorldMapFont(@OriginalArg(0) int size, @OriginalArg(1) boolean arg1, @OriginalArg(2) Component component) {
 		this.dataIndex = ALPHABET_SIZE * 9;
 		this.grayscale = false;
+		this.fontSize = size;
 		@Pc(30) Font font = new Font("Helvetica", Font.BOLD, size);
 		@Pc(34) FontMetrics boldMetrics = component.getFontMetrics(font);
 		@Pc(36) int i;
@@ -80,7 +84,13 @@ public final class WorldMapFont {
 			shadow = false;
 		}
 		for (@Pc(8) int i = 0; i < s.length(); i++) {
-			@Pc(20) int index = CHAR_INDEXES[s.charAt(i)];
+			@Pc(20) int c = s.charAt(i);
+			if (c > 255) {
+				// 中文字元：強制 SoftwareRaster 渲染（地圖在 GL 模式為離屏 sprite）
+				x += CJKRenderer.drawGlyphSoftware(c, x, y + this.fontSize, this.fontSize);
+				continue;
+			}
+			int index = CHAR_INDEXES[c];
 			if (shadow) {
 				this.renderGlyph(index, x + 1, y, 1, this.data);
 				this.renderGlyph(index, x, y + 1, 1, this.data);
@@ -320,7 +330,13 @@ public final class WorldMapFont {
 			} else if (arg0.charAt(local3) == 126 && local3 + 4 < arg0.length() && arg0.charAt(local3 + 4) == 126) {
 				local3 += 4;
 			} else {
-				local1 += this.data[CHAR_INDEXES[arg0.charAt(local3)] + 7];
+				int c = arg0.charAt(local3);
+				if (c > 255) {
+					// 中文字元：用 CJKRenderer 的近似寬度（避免 CHAR_INDEXES 越界崩潰）
+					local1 += CJKRenderer.charWidth(c, this.fontSize);
+				} else {
+					local1 += this.data[CHAR_INDEXES[c] + 7];
+				}
 			}
 		}
 		return local1;

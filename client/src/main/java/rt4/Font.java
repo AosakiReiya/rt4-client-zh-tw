@@ -279,13 +279,8 @@ public abstract class Font extends SecondaryNode {
 				}
 				if (local6 == -1) {
 					if (local22 > 255) {
-						// CJK/Unicode 字元：改走 AWT 渲染
-						if (GlRenderer.enabled) {
-							// OpenGL 模式下無 SoftwareRaster 可用，改用空字寬處理
-							arg1 += CJKRenderer.charWidth(local22, this.lineHeight);
-						} else {
-							arg1 += CJKRenderer.drawGlyph(local22, arg1, local4 + this.lineHeight, this.lineHeight);
-						}
+						// CJK/Unicode 字元：一律走 AWT 渲染到 SoftwareRaster（介面文字在 GL 模式亦為 sprite 化）
+						arg1 += CJKRenderer.drawGlyph(local22, arg1, local4 + this.lineHeight, this.lineHeight);
 						local8 = local22;
 						continue;
 					}
@@ -979,12 +974,8 @@ public abstract class Font extends SecondaryNode {
 				}
 				if (local6 == -1) {
 					if (local24 > 255) {
-						// CJK/Unicode 字元：改走 AWT 渲染
-						if (GlRenderer.enabled) {
-							arg1 += CJKRenderer.charWidth(local24, this.lineHeight);
-						} else {
-							arg1 += CJKRenderer.drawGlyph(local24, arg1, local4 + this.lineHeight, this.lineHeight);
-						}
+						// CJK/Unicode 字元：一律走 AWT 渲染到 SoftwareRaster
+						arg1 += CJKRenderer.drawGlyph(local24, arg1, local4 + this.lineHeight, this.lineHeight);
 						local8 = local24;
 						continue;
 					}

@@ -443,7 +443,7 @@ public final class LocType {
 				}
 			}
 		} else if (opcode == 2) {
-			this.name = buffer.gjstr();
+			this.name = JagString.parse(NameTranslation.translateBilingual(buffer.gjstr().toString()));
 		} else if (opcode == 5) {
 			count = buffer.g1();
 			if (count > 0) {
@@ -488,9 +488,11 @@ public final class LocType {
 		} else if (opcode == 39) {
 			this.contrast = buffer.g1b() * 5;
 		} else if (opcode >= 30 && opcode < 35) {
-			this.ops[opcode - 30] = buffer.gjstr();
-			if (this.ops[opcode - 30].equalsIgnoreCase(LocalizedText.HIDDEN)) {
+			JagString op = buffer.gjstr();
+			if (op.equalsIgnoreCase(LocalizedText.HIDDEN)) {
 				this.ops[opcode - 30] = null;
+			} else {
+				this.ops[opcode - 30] = JagString.parse(CacheTranslation.translate(op.toString()));
 			}
 		} else if (opcode == 40) {
 			count = buffer.g1();

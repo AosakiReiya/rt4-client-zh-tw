@@ -256,7 +256,7 @@ public final class ObjType {
 		if (opcode == Opcodes.model) { // 1
 			this.model = buffer.g2();
 		} else if (opcode == Opcodes.name) { // 2
-			this.name = buffer.gjstr();
+			this.name = JagString.parse(NameTranslation.translate(buffer.gjstr().toString()));
 		} else if (opcode == Opcodes.zoom2d) { // 4
 			this.zoom2d = buffer.g2();
 		} else if (opcode == Opcodes.xan2d) { // 5
@@ -288,12 +288,14 @@ public final class ObjType {
 		} else if (opcode == Opcodes.womanwear2) { // 26
 			this.womanwear2 = buffer.g2();
 		} else if (opcode >= Opcodes.op1 && opcode <= Opcodes.op5) { // 30-34
-			this.ops[opcode - Opcodes.op1] = buffer.gjstr();
-			if (this.ops[opcode - Opcodes.op1].equalsIgnoreCase(LocalizedText.HIDDEN)) {
+			JagString op = buffer.gjstr();
+			if (op.equalsIgnoreCase(LocalizedText.HIDDEN)) {
 				this.ops[opcode - Opcodes.op1] = null;
+			} else {
+				this.ops[opcode - Opcodes.op1] = JagString.parse(CacheTranslation.translate(op.toString()));
 			}
 		} else if (opcode >= Opcodes.iop1 && opcode <= Opcodes.iop5) { // 35-39
-			this.iops[opcode - Opcodes.iop1] = buffer.gjstr();
+			this.iops[opcode - Opcodes.iop1] = JagString.parse(CacheTranslation.translate(buffer.gjstr().toString()));
 		} else {
 			@Pc(169) int count;
 			@Pc(179) int i;

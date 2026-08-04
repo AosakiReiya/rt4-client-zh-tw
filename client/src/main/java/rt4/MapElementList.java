@@ -14,6 +14,9 @@ public final class MapElementList {
 	@OriginalMember(owner = "client!se", name = "j", descriptor = "[Lclient!na;")
 	public final JagString[] aClass100Array153;
 
+	/** 原始英文 label（未翻譯），供搜索匹配使用。 */
+	public JagString[] aClass100ArrayEng;
+
 	@OriginalMember(owner = "client!se", name = "d", descriptor = "[S")
 	public final short[] aShortArray72;
 
@@ -44,9 +47,12 @@ public final class MapElementList {
 		}
 		@Pc(29) int[] local29 = arg1.getFileIds(local10);
 		@Pc(35) MapElementList local35 = new MapElementList(local29.length);
+		local35.aClass100ArrayEng = new JagString[local29.length];
 		for (@Pc(37) int local37 = 0; local37 < local35.anInt5074; local37++) {
 			@Pc(56) Buffer local56 = new Buffer(arg1.fetchFile(local10, local29[local37]));
-			local35.aClass100Array153[local37] = local56.gjstr();
+			JagString eng = JagString.parse(local56.gjstr().toString());
+			local35.aClass100ArrayEng[local37] = eng;
+			local35.aClass100Array153[local37] = JagString.parse(NameTranslation.translateBilingualMap(eng.toString()));
 			local35.aByteArray69[local37] = local56.g1b();
 			local35.aShortArray73[local37] = (short) local56.g2();
 			local35.aShortArray72[local37] = (short) local56.g2();
