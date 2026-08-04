@@ -86,8 +86,9 @@ public final class WorldMapFont {
 		for (@Pc(8) int i = 0; i < s.length(); i++) {
 			@Pc(20) int c = s.charAt(i);
 			if (c > 255) {
-				// 中文字元：強制 SoftwareRaster 渲染（地圖在 GL 模式為離屏 sprite）
-				x += CJKRenderer.drawGlyphSoftware(c, x, y + this.fontSize, this.fontSize);
+				// 中文字元：強制 SoftwareRaster 渲染（地圖在 GL 模式為離屏 sprite）。
+				// 用全尺寸（不套用大字型縮小），使地圖 label 中文與英文 Helvetica 同級大小。
+				x += CJKRenderer.drawGlyphSoftwareFull(c, x, y + this.fontSize, this.fontSize);
 				continue;
 			}
 			int index = CHAR_INDEXES[c];
@@ -333,7 +334,7 @@ public final class WorldMapFont {
 				int c = arg0.charAt(local3);
 				if (c > 255) {
 					// 中文字元：用 CJKRenderer 的近似寬度（避免 CHAR_INDEXES 越界崩潰）
-					local1 += CJKRenderer.charWidth(c, this.fontSize);
+					local1 += CJKRenderer.charWidthFull(c, this.fontSize);
 				} else {
 					local1 += this.data[CHAR_INDEXES[c] + 7];
 				}

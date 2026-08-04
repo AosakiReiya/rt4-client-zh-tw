@@ -25,8 +25,13 @@ public final class CJKRenderer {
 
 	/** 計算 CJK 字元渲染尺寸：大字型（主選單按鈕等）額外縮小，避免中文超過按鈕文字區。 */
 	private static int computeScaledSize(int fontSize) {
+		return computeScaledSize(fontSize, true);
+	}
+
+	/** applyLargeScale=false 時不套用大字型縮小（供地圖 label 等需要全尺寸的場合）。 */
+	private static int computeScaledSize(int fontSize, boolean applyLargeScale) {
 		double scale = CJK_SCALE;
-		if (fontSize > LARGE_FONT_THRESHOLD) {
+		if (applyLargeScale && fontSize > LARGE_FONT_THRESHOLD) {
 			scale = CJK_SCALE * LARGE_FONT_SCALE;
 		}
 		return Math.max(6, (int) (fontSize * scale));
@@ -278,6 +283,38 @@ public final class CJKRenderer {
 		return drawGlyphSoftwareToRaster(codepoint, x, baselineY, fontSize, fm, src, bufferSize, charWidth);
 	}
 
+	/**
+	 * 全尺寸版（不套用大字型縮小）。供 WorldMapFont 地圖 label 使用：地圖字型 font17-30
+	 * 若不套用縮小會保持與英文 Helvetica 同級大小。
+	 */
+	public static int drawGlyphSoftwareFull(int codepoint, int x, int baselineY, int fontSize) {
+		if (fontSize <= 0) {
+			fontSize = 12;
+		}
+		int scaledSize = computeScaledSize(fontSize, false);
+		int bufferSize = scaledSize + GLYPH_PADDING;
+		GlyphBuffer buf = BUFFERS_BY_SIZE.get(Integer.valueOf(scaledSize));
+		if (buf == null) {
+			buf = new GlyphBuffer(scaledSize);
+			BUFFERS_BY_SIZE.put(Integer.valueOf(scaledSize), buf);
+		}
+		Graphics2D g = buf.g;
+		g.setComposite(AlphaComposite.Clear);
+		g.fillRect(0, 0, bufferSize, bufferSize);
+		g.setComposite(AlphaComposite.SrcOver);
+		g.setColor(Color.WHITE);
+		g.setFont(fontFor(scaledSize));
+		FontMetrics fm = g.getFontMetrics();
+		int charWidth = fm.charWidth(codepoint);
+		if (charWidth <= 0) {
+			charWidth = scaledSize;
+		}
+		g.drawString(new String(Character.toChars(codepoint)), 0, scaledSize);
+		int[] src = new int[bufferSize * bufferSize];
+		buf.image.getRGB(0, 0, bufferSize, bufferSize, src, 0, bufferSize);
+		return drawGlyphSoftwareToRaster(codepoint, x, baselineY, fontSize, fm, src, bufferSize, charWidth);
+	}
+
 	/** SoftwareRaster 渲染共用邏輯（drawGlyph 與 drawGlyphSoftware 共用）。 */
 	private static int drawGlyphSoftwareToRaster(int codepoint, int x, int baselineY, int fontSize,
 			FontMetrics fm, int[] src, int bufferSize, int charWidth) {
@@ -342,6 +379,19 @@ public final class CJKRenderer {
 			fontSize = 12;
 		}
 		int scaledSize = computeScaledSize(fontSize);
+		Graphics2D g = BUFFERS_BY_SIZE.computeIfAbsent(Integer.valueOf(scaledSize), GlyphBuffer::new).g;
+		g.setFont(fontFor(scaledSize));
+		FontMetrics fm = g.getFontMetrics();
+		int w = fm.charWidth(codepoint);
+		return w <= 0 ? scaledSize : w;
+	}
+
+	/** 全尺寸寬度（不套用大字型縮小），供地圖 label 等使用。 */
+	public static int charWidthFull(int codepoint, int fontSize) {
+		if (fontSize <= 0) {
+			fontSize = 12;
+		}
+		int scaledSize = computeScaledSize(fontSize, false);
 		Graphics2D g = BUFFERS_BY_SIZE.computeIfAbsent(Integer.valueOf(scaledSize), GlyphBuffer::new).g;
 		g.setFont(fontFor(scaledSize));
 		FontMetrics fm = g.getFontMetrics();
