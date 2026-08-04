@@ -19,8 +19,9 @@ public class WordPack {
 	public static int encode(@OriginalArg(1) Buffer arg0, @OriginalArg(2) JagString arg1) {
 		@Pc(6) int local6 = arg0.offset;
 		@Pc(14) byte[] local14 = arg1.method3148();
+		// 改用 UTF-8 明文（不壓縮），使中文聊天可發送（伺服器 decryptPlayerChat 需對應改為讀 UTF-8）
 		arg0.psmarts(local14.length);
-		arg0.offset += codec.encode(local14.length, arg0.data, local14, 0, arg0.offset);
+		arg0.pdata(local14, local14.length);
 		return arg0.offset - local6;
 	}
 }
