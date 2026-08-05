@@ -585,7 +585,7 @@ public final class NpcType {
 				}
 			}
 		} else if (opcode == 2) {
-			this.name = JagString.parse(NameTranslation.translateBilingual(buffer.gjstr().toString()));
+			this.name = JagString.of(NameTranslation.translateBilingual(buffer.gjstr().toString()));
 		} else if (opcode == 12) {
 			this.size = buffer.g1();
 		} else if (opcode >= 30 && opcode < 35) {
@@ -593,7 +593,7 @@ public final class NpcType {
 			if (op.equalsIgnoreCase(LocalizedText.HIDDEN)) {
 				this.ops[opcode - 30] = null;
 			} else {
-				this.ops[opcode - 30] = JagString.parse(CacheTranslation.translate(op.toString()));
+				this.ops[opcode - 30] = JagString.of(CacheTranslation.translate(op.toString()));
 			}
 		} else if (opcode == 40) {
 			count = buffer.g1();

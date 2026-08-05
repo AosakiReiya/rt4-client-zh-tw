@@ -1894,17 +1894,18 @@ public class WorldMap {
 				}
 				if (local84 != null) {
 					@Pc(211) int local211 = Fonts.p11Full.splitParagraph(labels.aClass100Array153[local11], null, aClass100Array53);
-					local80 -= local84.method1503() * (local211 - 1) / 2;
-					local80 += local84.method1511() / 2;
-					// 中英兩行 label（中文<br>(英文)）：中文全形字行高較大，行距加倍避免上下重疊
+					// 中英兩行 label（中文<br>(英文)）：中文全形字行高較大，行距採 1.5 倍避免上下重疊（2 倍過遠）
 					boolean bilingual = labels.aClass100Array153[local11].indexOf(aClass100_872) >= 0 && containsCjk(labels.aClass100Array153[local11]);
+					int labelSpacing = bilingual ? local84.method1503() * 3 / 2 : local84.method1503();
+					local80 -= labelSpacing * (local211 - 1) / 2;
+					local80 += local84.method1511() / 2;
 					for (@Pc(231) int local231 = 0; local231 < local211; local231++) {
 						@Pc(242) JagString local242 = aClass100Array53[local231];
 						if (local211 - 1 > local231) {
 							local242.method3133(local242.length() - 4);
 						}
 						local84.renderStringCenter(local242, local59, local80, local82);
-						local80 += bilingual ? local84.method1503() * 2 : local84.method1503();
+						local80 += labelSpacing;
 					}
 				}
 			}

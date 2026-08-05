@@ -685,7 +685,7 @@ public final class Component {
 			for (i = 0; i < 5; i++) {
 				@Pc(418) JagString option = buffer.gjstr();
 				if (option.length() > 0) {
-					this.invOptions[i] = JagString.parse(CacheTranslation.translate(option.toString()));
+					this.invOptions[i] = JagString.of(CacheTranslation.translate(option.toString()));
 					local164 |= 0x1 << i + 23;
 				}
 			}
@@ -705,8 +705,8 @@ public final class Component {
 		}
 		if (this.type == 4) {
 			JagString t4 = buffer.gjstr();
-			this.text = JagString.parse(CacheTranslation.translate(t4.toString()));
-			this.activeText = JagString.parse(CacheTranslation.translate(buffer.gjstr().toString()));
+			this.text = JagString.of(CacheTranslation.translate(t4.toString()));
+			this.activeText = JagString.of(CacheTranslation.translate(buffer.gjstr().toString()));
 		}
 		if (this.type == 1 || this.type == 3 || this.type == 4) {
 			this.color = buffer.g4();
@@ -765,22 +765,22 @@ public final class Component {
 			for (int i = 0; i < 5; i++) {
 				@Pc(756) JagString option = buffer.gjstr();
 				if (option.length() > 0) {
-					this.invOptions[i] = JagString.parse(CacheTranslation.translate(option.toString()));
+					this.invOptions[i] = JagString.of(CacheTranslation.translate(option.toString()));
 					local164 |= 0x1 << i + 23;
 				}
 			}
 		}
 		if (this.type == 8) {
-			this.text = JagString.parse(CacheTranslation.translate(buffer.gjstr().toString()));
+			this.text = JagString.of(CacheTranslation.translate(buffer.gjstr().toString()));
 		}
 		if (this.buttonType == 2 || this.type == 2) {
-			this.optionCircumfix = JagString.parse(CacheTranslation.translate(buffer.gjstr().toString()));
-			this.optionSuffix = JagString.parse(CacheTranslation.translate(buffer.gjstr().toString()));
+			this.optionCircumfix = JagString.of(CacheTranslation.translate(buffer.gjstr().toString()));
+			this.optionSuffix = JagString.of(CacheTranslation.translate(buffer.gjstr().toString()));
 			local175 = buffer.g2() & 0x3F;
 			local164 |= local175 << 11;
 		}
 		if (this.buttonType == 1 || this.buttonType == 4 || this.buttonType == 5 || this.buttonType == 6) {
-			this.option = JagString.parse(CacheTranslation.translate(buffer.gjstr().toString()));
+			this.option = JagString.of(CacheTranslation.translate(buffer.gjstr().toString()));
 			if (this.option.length() == 0) {
 				if (this.buttonType == 1) {
 					this.option = LocalizedText.OK;
@@ -1090,7 +1090,7 @@ public final class Component {
 			if (this.font == 65535) {
 				this.font = -1;
 			}
-			this.text = JagString.parse(CacheTranslation.translate(buffer.gjstr().toString()));
+			this.text = JagString.of(CacheTranslation.translate(buffer.gjstr().toString()));
 			this.vpadding = buffer.g1();
 			this.halign = buffer.g1();
 			this.valign = buffer.g1();
@@ -1128,7 +1128,7 @@ public final class Component {
 				local471 = buffer.g1();
 			}
 		}
-		this.optionBase = JagString.parse(CacheTranslation.translate(buffer.gjstr().toString()));
+		this.optionBase = JagString.of(CacheTranslation.translate(buffer.gjstr().toString()));
 		local497 = buffer.g1();
 		@Pc(557) int local557 = local497 & 0xF;
 		@Pc(567) int local567;
@@ -1136,7 +1136,7 @@ public final class Component {
 			this.ops = new JagString[local557];
 			for (local567 = 0; local567 < local557; local567++) {
 				JagString opt = buffer.gjstr();
-				this.ops[local567] = JagString.parse(CacheTranslation.translate(opt.toString()));
+				this.ops[local567] = JagString.of(CacheTranslation.translate(opt.toString()));
 			}
 		}
 		@Pc(584) int local584 = local497 >> 4;
@@ -1156,7 +1156,7 @@ public final class Component {
 		this.dragDeadtime = buffer.g1();
 		this.dragRenderBehavior = buffer.g1() == 1;
 		local567 = -1;
-		this.optionCircumfix = JagString.parse(CacheTranslation.translate(buffer.gjstr().toString()));
+		this.optionCircumfix = JagString.of(CacheTranslation.translate(buffer.gjstr().toString()));
 		if (ServerActiveProperties.getTargetMask(local175) != 0) {
 			local567 = buffer.g2();
 			this.anInt499 = buffer.g2();
