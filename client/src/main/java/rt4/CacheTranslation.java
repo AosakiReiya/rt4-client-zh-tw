@@ -340,14 +340,38 @@ public class CacheTranslation {
 	}
 
 	/**
-	 * 萬用翻譯 fallback：處理 skill guide 物品名（可能帶等級前綴、單複數、大小寫差異）。
-	 * 1) 剝離開頭 "N " 等級前綴後翻譯其餘（"10 Combat hood" → "10 戰鬥兜帽"）
-	 * 2) NameTranslation 物品名查詢（"Adamant kiteshield" → "精鋼風箏盾"）
-	 * 3) 單數/複數 與 大小寫 變體試查
+	 * 萬用翻譯 fallback：把執行期組合字串拆解成已知詞彙翻譯。
+	 * 處理 skill guide 等介面的各種組合模式：
+	 *   "N ItemName (with M Skill)"、"ItemName (after Quest)"、
+	 *   "Stealing Creation - class N X"、" - Members Only"、"Label: value" 等。
+	 * 全程「全-or-無」：任一段翻不到即放棄，避免中英混雜。
 	 */
 	private static String universalFallback(String s) {
+		if (s == null || s.isEmpty()) return null;
+		if (containsCjk(s)) return null;        // 已翻譯
+		if (!hasEnglishLetter(s)) return null;  // 無英文字母（純數字/符號）
+		return decompose(s);
+	}
+
+	private static String decompose(String s) {
 		String t;
-		// 1) 等級前綴剝離："數字[ ]+名稱" → 翻譯名稱部分
+		// 1) 括號後綴："base (content)" → 翻譯 base + 括號內容模板
+		int lp = s.lastIndexOf(" (");
+		if (lp > 0) {
+			String base = s.substring(0, lp).trim();
+			String paren = s.substring(lp + 2);
+			if (paren.endsWith(")") && paren.length() > 1) {
+				String content = paren.substring(0, paren.length() - 1).trim();
+				String zhContent = translateParen(content);
+				if (zhContent != null) {
+					String zhBase = translate(base);
+					if (!zhBase.equals(base)) {
+						return zhBase + "（" + zhContent + "）";
+					}
+				}
+			}
+		}
+		// 2) 數字前綴："N X" → 翻譯 X
 		int sp = s.indexOf(' ');
 		if (sp > 0 && sp < s.length() - 1) {
 			String prefix = s.substring(0, sp);
@@ -359,19 +383,104 @@ public class CacheTranslation {
 				}
 			}
 		}
-		// 1b) "標籤: +數字" 形式（如 "Stab: +0"、"Hitpoints: 10/10"）→ 翻譯標籤部分
+		// 3) "Label: value" —— 標籤與其餘部分都需翻譯才套用（避免部分翻譯）
 		int colon = s.indexOf(':');
 		if (colon > 0) {
 			String label = s.substring(0, colon + 1).trim();
 			String zhLabel = lookupLabel(label);
 			if (zhLabel != null) {
-				return zhLabel + " " + s.substring(colon + 1).trim();
+				String rest = s.substring(colon + 1).trim();
+				String zhRest = translate(rest);
+				if (!zhRest.equals(rest)) {
+					return zhLabel + " " + zhRest;
+				}
 			}
 		}
-		// 2) NameTranslation：物品/NPC/Loc 名稱（含中英結合，此處只取中文部分）
+		// 4) " - " 分隔：各段翻譯
+		if (s.indexOf(" - ") > 0) {
+			String[] parts = s.split(" - ");
+			StringBuilder sb = new StringBuilder();
+			boolean all = true;
+			for (int i = 0; i < parts.length; i++) {
+				if (i > 0) sb.append(" - ");
+				String p = parts[i].trim();
+				String zhP = translate(p);
+				if (zhP.equals(p)) { all = false; break; }
+				sb.append(zhP);
+			}
+			if (all) return sb.toString();
+		}
+		// 5) " / " 分隔
+		if (s.indexOf(" / ") > 0) {
+			String[] parts = s.split(" / ");
+			StringBuilder sb = new StringBuilder();
+			boolean all = true;
+			for (int i = 0; i < parts.length; i++) {
+				if (i > 0) sb.append(" / ");
+				String p = parts[i].trim();
+				String zhP = translate(p);
+				if (zhP.equals(p)) { all = false; break; }
+				sb.append(zhP);
+			}
+			if (all) return sb.toString();
+		}
+		// 6) "class N X" → "第 N 階 X"
+		java.util.regex.Matcher cm = CLASS_PAT.matcher(s);
+		if (cm.matches()) {
+			String zhType = translate(cm.group(2));
+			if (zhType != null && !zhType.equals(cm.group(2))) {
+				return "第 " + cm.group(1) + " 階 " + zhType;
+			}
+		}
+		// 7) "Nth tier X" → "第 N 階 X"
+		java.util.regex.Matcher tm = TIER_PAT.matcher(s);
+		if (tm.matches()) {
+			String zhType = translate(tm.group(2));
+			if (zhType != null && !zhType.equals(tm.group(2))) {
+				return "第 " + tm.group(1) + " 階 " + zhType;
+			}
+		}
+		// 8) NameTranslation：物品/NPC/Loc 名稱
 		t = NameTranslation.lookupZh(s);
 		if (t != null) return t;
-		// 3) 單複數變體：剝離/補上尾部 s
+		// 9) 單複數變體
+		t = singularPlural(s);
+		if (t != null) return t;
+		// 10) token fallback（全 or-無）
+		return translateTokens(s);
+	}
+
+	/** 括號內容翻譯模板。未命中回傳 null。 */
+	private static String translateParen(String content) {
+		if (content == null || content.isEmpty()) return null;
+		if (content.equalsIgnoreCase("Members Only")) return "僅限會員";
+		java.util.regex.Matcher wm = WITH_PAT.matcher(content);
+		if (wm.matches()) {
+			String skill = wm.group(2);
+			String zhSkill = translate(skill);
+			if (!zhSkill.equals(skill)) return "需 " + wm.group(1) + " " + zhSkill;
+			return null;
+		}
+		java.util.regex.Matcher as = AFTER_START_PAT.matcher(content);
+		if (as.matches()) {
+			String quest = as.group(1);
+			String zhQuest = translate(quest);
+			if (!zhQuest.equals(quest)) return "開始 " + zhQuest + " 後";
+			return null;
+		}
+		java.util.regex.Matcher af = AFTER_PAT.matcher(content);
+		if (af.matches()) {
+			String quest = af.group(1);
+			String zhQuest = translate(quest);
+			if (!zhQuest.equals(quest)) return "完成 " + zhQuest + " 後";
+			return null;
+		}
+		String zh = translate(content);
+		return zh.equals(content) ? null : zh;
+	}
+
+	private static String singularPlural(String s) {
+		String t;
 		if (s.endsWith("s") && s.length() > 3) {
 			String singular = s.substring(0, s.length() - 1);
 			t = NameTranslation.lookupZh(singular);
@@ -386,6 +495,56 @@ public class CacheTranslation {
 			if (t != null) return t;
 		}
 		return null;
+	}
+
+	/** token fallback：依空白拆 token，僅當所有含英文字母的 token 都命中才套用。 */
+	private static String translateTokens(String s) {
+		if (s.isEmpty() || s.indexOf(' ') < 0) return null;
+		String[] words = s.split(" ");
+		StringBuilder sb = new StringBuilder();
+		boolean all = true;
+		for (String w : words) {
+			if (sb.length() > 0) sb.append(" ");
+			boolean hasLetter = false;
+			for (int i = 0; i < w.length(); i++) {
+				char c = w.charAt(i);
+				if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) { hasLetter = true; break; }
+			}
+			if (!hasLetter) {
+				sb.append(w);
+				continue;
+			}
+			String tw = translate(w);
+			if (!tw.equals(w)) {
+				sb.append(tw);
+			} else {
+				all = false;
+				sb.append(w);
+			}
+		}
+		return all ? sb.toString() : null;
+	}
+
+	private static final java.util.regex.Pattern CLASS_PAT = java.util.regex.Pattern.compile("^class (\\d+) (.+)$");
+	private static final java.util.regex.Pattern TIER_PAT = java.util.regex.Pattern.compile("^([1-9][0-9]?)(?:st|nd|rd|th) tier (.+)$");
+	private static final java.util.regex.Pattern WITH_PAT = java.util.regex.Pattern.compile("^with (\\d+) ([A-Za-z ]+)$");
+	private static final java.util.regex.Pattern AFTER_START_PAT = java.util.regex.Pattern.compile("^after starting (.+)$");
+	private static final java.util.regex.Pattern AFTER_PAT = java.util.regex.Pattern.compile("^after (.+)$");
+
+	private static boolean containsCjk(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (c > 0x1FFF) return true;
+		}
+		return false;
+	}
+
+	private static boolean hasEnglishLetter(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) return true;
+		}
+		return false;
 	}
 
 	private static boolean isNumeric(String s) {

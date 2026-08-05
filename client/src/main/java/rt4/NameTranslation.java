@@ -310,6 +310,29 @@ public class NameTranslation {
 		+ "Stronghold of Security\u0000安全要塞\u0000Mage Training Arena\u0000法師訓練競技場\u0000"
 		+ "Sorceress's Garden\u0000女巫之園\u0000Zanaris\u0000扎納里斯\u0000Lair of Tarn Razorlor\u0000塔恩·剃刀勞爾巢穴\u0000";
 
+	private static final String D241 =
+		"Keldagrim Palace\u0000凱爾達格里姆宮殿\u0000Dwarven Mines\u0000矮人礦場\u0000TzHaar City\u0000茲哈爾城\u0000"
+		+ "Ogre City\u0000食人魔之城\u0000Piscatoris\u0000皮斯卡托里斯\u0000Gnome Stronghold\u0000侏儒要塞\u0000"
+		+ "Mountain Camp\u0000山間營地\u0000East Ardougne\u0000東阿爾多內\u0000West Ardougne\u0000西阿爾多內\u0000"
+		+ "Shayzien\u0000沙伊琴\u0000Lovakengj\u0000洛瓦肯吉\u0000Hosidius\u0000霍西迪烏斯\u0000"
+		+ "Piscarilius\u0000皮斯卡里利烏斯\u0000Kourend\u0000庫倫德\u0000Great Kourend\u0000大庫倫德\u0000"
+		+ "Darkmeyer\u0000達克邁爾\u0000Slepe\u0000斯雷普\u0000Ecteria\u0000埃克特里亞\u0000Ghorrock\u0000戈爾洛克\u0000"
+		+ "Chaos Temple\u0000混沌神殿\u0000Bandit Camp\u0000強盜營地\u0000Lava Dragon Isle\u0000岩漿龍島\u0000"
+		+ "Revenant Caves\u0000亡靈洞穴\u0000Mage Training Arena\u0000法師訓練競技場\u0000"
+		+ "Frozen Waste Plateau\u0000冰凍荒原高原\u0000God Wars Dungeon\u0000神戰地牢\u0000Tree Stronghold\u0000樹要塞\u0000"
+		+ "Karamja Dungeon\u0000卡拉姆賈地牢\u0000Brimhaven Dungeon\u0000布林海文地牢\u0000"
+		+ "Taverley Dungeon\u0000塔弗利地牢\u0000Asgarnian Ice Dungeon\u0000阿斯加尼亞冰地牢\u0000"
+		+ "Dwarven Mine\u0000矮人礦場\u0000Rune Essence Mine\u0000符文精髓礦場\u0000"
+		+ "Lumbridge & Draynor\u0000倫布里奇與卓奈爾\u0000Desert\u0000沙漠\u0000Kharidian Desert\u0000卡里迪安沙漠\u0000"
+		+ "Kharidian Desert north\u0000卡里迪安沙漠北部\u0000Kharidian Desert south\u0000卡里迪安沙漠南部\u0000"
+		+ "Uzer\u0000烏澤爾\u0000Al Kharid mine\u0000阿爾·卡里德礦場\u0000Sophanem Dungeon\u0000索法內姆地牢\u0000"
+		+ "Rogue's Den\u0000盜賊巢穴\u0000Agility Arena\u0000敏捷競技場\u0000Blast Furnace\u0000高爐\u0000"
+		+ "Pest Control\u0000害蟲控制\u0000Warriors' Guild\u0000戰士公會\u0000Magic Guild\u0000魔法公會\u0000"
+		+ "Rangers' Guild\u0000遊俠公會\u0000Woodcutting Guild\u0000伐木公會\u0000Smithing Guild\u0000鍛造公會\u0000"
+		+ "Zanaris\u0000扎納里斯\u0000West Ardougne Dungeon\u0000西阿爾多內地牢\u0000Salve\u0000薩爾夫\u0000"
+		+ "Salve Graveyard\u0000薩爾夫墓園\u0000Mort Myre Swamp\u0000莫特邁爾沼澤\u0000"
+		+ "Draynor Crossroads\u0000卓奈爾十字路口\u0000Varrock Palace\u0000瓦洛克宮殿\u0000East Varrock\u0000東瓦洛克\u0000";
+
 	private static Map<String, String> MAP;
 
 	private static Map<String, String> map() {
@@ -797,6 +820,8 @@ public class NameTranslation {
 			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
 		{ String[] p = D240.split("\u0000");
 			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
+		{ String[] p = D241.split("\u0000");
+			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
 		// 地圖裸地名補充（Tutorial Island/Burthorpe/Yanille 等不在 D 表）
 		String[] extra = {
 			"Tutorial Island", "教學島", "Burthorpe", "伯索普", "Yanille", "亞尼勒",
@@ -898,13 +923,18 @@ public class NameTranslation {
 	/** 地圖專用中英結合：回傳「中文<br>(英文)」兩行（WorldMap splitParagraph 依 <br> 換行）。 */
 	public static String translateBilingualMap(String s) {
 		if (s == null || s.isEmpty()) return s;
-		// 剝除 <col>...<col>/<br> 標籤後查表，命中則把原標籤（含顏色）回填到中文譯文
-		String raw = s.replaceAll("<[^>]+>", "");
-		String r = map().get(raw);
-		if (r == null || r.equals(raw)) {
-			// 再試原樣（含標籤）
-			r = map().get(s);
-			if (r == null || r.equals(s)) {
+		// 先試原樣（含標籤）
+		String r = map().get(s);
+		// 剝除 <br>/<col> 標籤後查表（<br> 先換成空格，避免 "Lumbridge<br>Castle" 變 "LumbridgeCastle" 查詢失敗）
+		String raw = s.replaceAll("<br>", " ").replaceAll("</br>", " ").replaceAll("<[^>]+>", "").trim();
+		if ((r == null || r.equals(s)) && !raw.equals(s)) {
+			r = map().get(raw);
+		}
+		if (r == null || r.equals(s)) {
+			// 再試去空格（兩行標籤可能被存成無空格）
+			String noSpace = raw.replace(" ", "");
+			r = map().get(noSpace);
+			if (r == null || r.equals(noSpace)) {
 				return s;
 			}
 		}
