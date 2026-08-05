@@ -311,6 +311,23 @@ public class CacheTranslation {
 				if (end < 0) end = DATA_EXTRA.length();
 				return DATA_EXTRA.substring(start, end);
 			} }
+		// 大小寫不敏感 fallback（執行期字串可能小寫/大小寫不同，如 "stab:" vs 表內 "Stab:"）
+		String lower = s.toLowerCase();
+		String lowerNeedle = "\u0000" + lower + "\u0000";
+		int li = DATA_EXTRA.toLowerCase().indexOf(lowerNeedle);
+		if (li >= 0) {
+			int start = li + lowerNeedle.length();
+			int end = DATA_EXTRA.indexOf("\u0000", start);
+			if (end < 0) end = DATA_EXTRA.length();
+			return DATA_EXTRA.substring(start, end);
+		}
+		li = DATA32.toLowerCase().indexOf(lowerNeedle);
+		if (li >= 0) {
+			int start = li + lowerNeedle.length();
+			int end = DATA32.indexOf("\u0000", start);
+			if (end < 0) end = DATA32.length();
+			return DATA32.substring(start, end);
+		}
 		return s;
 	}
 }

@@ -139,6 +139,35 @@ public final class ScriptRunner {
 	@OriginalMember(owner = "client!me", name = "nb", descriptor = "I")
 	public static int anInt3751;
 
+	/** 客戶端數字模板匹配：處理「Level:3 Confuse」「Stab: +10」「Attack: 5/5」等動態值字串。 */
+	private static final java.util.regex.Pattern NUM_PAT = java.util.regex.Pattern.compile("\\d+(\\.\\d+)?");
+	private static String matchNumberTemplateClient(String s) {
+		if (s == null || s.isEmpty()) return s;
+		// Level:N <spell> / Level: N <spell>
+		java.util.regex.Matcher lm = NUM_PAT.matcher(s);
+		if (s.startsWith("Level") || s.startsWith("level")) {
+			if (lm.find()) {
+				String num = lm.group();
+				String rest = s.substring(lm.end()).trim();
+				String zhRest = CacheTranslation.translate(rest);
+				if (!zhRest.equals(rest)) {
+					return "等級：" + num + " " + zhRest;
+				}
+			}
+		}
+		// Stab/Slash/Crush: +N
+		java.util.regex.Matcher sm = NUM_PAT.matcher(s);
+		if (sm.find()) {
+			String num = sm.group();
+			String prefix = s.substring(0, sm.start()).trim();
+			String zhPrefix = CacheTranslation.translate(prefix);
+			if (!zhPrefix.equals(prefix)) {
+				return zhPrefix + " " + num;
+			}
+		}
+		return s;
+	}
+
 	@OriginalMember(owner = "client!ja", name = "a", descriptor = "(IIIIIZ)V")
 	public static void method2314(@OriginalArg(0) int arg0, @OriginalArg(2) int arg1, @OriginalArg(3) int arg2, @OriginalArg(4) int arg3, @OriginalArg(5) boolean arg4) {
 		if (arg0 < 1) {
@@ -2432,7 +2461,12 @@ public final class ScriptRunner {
 										str1 = JagString.of(sb.toString());
 									} else {
 										// CS2 operand 是英文原文；setText 是顯示落點，套 CacheTranslation 避免覆蓋中文為英文
-										str1 = JagString.of(CacheTranslation.translate(str1.toString()));
+										String setTextStr = str1.toString();
+										String translated = CacheTranslation.translate(setTextStr);
+										if (translated.equals(setTextStr)) {
+											translated = matchNumberTemplateClient(setTextStr);
+										}
+										str1 = JagString.of(translated);
 									}
 									if (!str1.strEquals(component.text)) {
 										component.text = str1;
