@@ -39,6 +39,15 @@ public class CacheTranslation {
 
 	public static String translate(String s) {
 		if (s == null || s.isEmpty()) return s;
+		// 剝離顏色/陰影標籤後翻譯，再回填標籤（如 <col=ff9b00>Talking in: Not in chat）
+		if (TAG_PAT.matcher(s).find()) {
+			String stripped = TAG_PAT.matcher(s).replaceAll("\u0001");
+			String zh = translate(stripped);
+			if (!zh.equals(stripped)) {
+				return spliceTags(s, zh);
+			}
+			return s;
+		}
 		{ String needle = "\u0000" + s + "\u0000";
 			int idx = DATA0.indexOf(needle);
 			if (idx >= 0) {
@@ -396,7 +405,7 @@ public class CacheTranslation {
 				}
 			}
 		}
-		// 4) " - " 分隔：各段翻譯
+		// 4) " - " 分隔：各段翻譯（首段可翻、其餘段為短英文時保留原文，如 "Friends List - 2009scape 1"）
 		if (s.indexOf(" - ") > 0) {
 			String[] parts = s.split(" - ");
 			StringBuilder sb = new StringBuilder();
@@ -405,8 +414,13 @@ public class CacheTranslation {
 				if (i > 0) sb.append(" - ");
 				String p = parts[i].trim();
 				String zhP = translate(p);
-				if (zhP.equals(p)) { all = false; break; }
-				sb.append(zhP);
+				if (zhP.equals(p)) {
+					if (i == 0) { all = false; break; }
+					if (p.length() > 24 || containsCjk(p)) { all = false; break; }
+					sb.append(p);
+				} else {
+					sb.append(zhP);
+				}
 			}
 			if (all) return sb.toString();
 		}
@@ -525,6 +539,30 @@ public class CacheTranslation {
 			}
 		}
 		return all ? sb.toString() : null;
+	}
+
+	private static final java.util.regex.Pattern TAG_PAT = java.util.regex.Pattern.compile("<col=[0-9a-fA-F]+>|<shad(=-?[0-9]+)?>|</col>|</shad>");
+
+	/** 把 <col=..>/<shad..> 標籤回填到譯文的對應位置（依字元位置對映，越界則靠最前/最後）。 */
+	private static String spliceTags(String original, String translated) {
+		java.util.List<String> tags = new java.util.ArrayList<>();
+		java.util.List<Integer> positions = new java.util.ArrayList<>();
+		StringBuilder clean = new StringBuilder();
+		java.util.regex.Matcher m = TAG_PAT.matcher(original);
+		while (m.find()) {
+			tags.add(m.group());
+			positions.add(clean.length());
+			m.appendReplacement(clean, "");
+		}
+		m.appendTail(clean);
+		if (tags.isEmpty()) return translated;
+		StringBuilder out = new StringBuilder(translated);
+		for (int i = tags.size() - 1; i >= 0; i--) {
+			int pos = positions.get(i);
+			if (pos > out.length()) pos = out.length();
+			out.insert(pos, tags.get(i));
+		}
+		return out.toString();
 	}
 
 	private static final java.util.regex.Pattern CLASS_PAT = java.util.regex.Pattern.compile("^class (\\d+) (.+)$");
