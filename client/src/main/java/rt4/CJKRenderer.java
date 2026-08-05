@@ -167,7 +167,7 @@ public final class CJKRenderer {
 	}
 
 	/** GL 字元 sprite 快取：codepoint*65536+scaledSize -> GlAlphaSprite（離屏 sprite 上傳）。 */
-	private static final java.util.Map<Integer, GlAlphaSprite> GL_SPRITES = new java.util.HashMap<>();
+	private static final java.util.Map<Long, GlAlphaSprite> GL_SPRITES = new java.util.HashMap<>();
 	private static int glContextId = -1;
 
 	/**
@@ -176,7 +176,7 @@ public final class CJKRenderer {
 	 * 位置與 Software 分支完全一致；全程透過 GlRenderer.setTextureId 追蹤 state（不手動 glDisable）。
 	 */
 	private static void drawGlSprite(int codepoint, int scaledSize, int[] argb, int bufferSize,
-			int x, int y) {
+			int x, int y, int color) {
 		if (GlRenderer.gl == null || bufferSize <= 0) {
 			return;
 		}
@@ -184,12 +184,22 @@ public final class CJKRenderer {
 			glContextId = GlCleaner.contextId;
 			GL_SPRITES.clear();
 		}
-		int key = codepoint * 65536 + scaledSize;
-		GlAlphaSprite cached = GL_SPRITES.get(Integer.valueOf(key));
+		// 快取 key 含顏色：不同顏色使用不同 sprite（把白色遮罩重上色）
+		long key = ((long) codepoint << 44) | ((long) scaledSize << 28) | (color & 0xFFFFFFL);
+		GlAlphaSprite cached = GL_SPRITES.get(Long.valueOf(key));
 		if (cached == null) {
-			SoftwareAlphaSprite ss = new SoftwareAlphaSprite(bufferSize, bufferSize, 0, 0, bufferSize, bufferSize, argb);
+			int[] tinted = new int[argb.length];
+			for (int i = 0; i < argb.length; i++) {
+				int a = argb[i] >>> 24;
+				if (a == 0) {
+					tinted[i] = 0;
+				} else {
+					tinted[i] = (a << 24) | (color & 0xFFFFFF);
+				}
+			}
+			SoftwareAlphaSprite ss = new SoftwareAlphaSprite(bufferSize, bufferSize, 0, 0, bufferSize, bufferSize, tinted);
 			cached = new GlAlphaSprite(ss);
-			GL_SPRITES.put(Integer.valueOf(key), cached);
+			GL_SPRITES.put(Long.valueOf(key), cached);
 		}
 		cached.render(x, y);
 	}
@@ -202,7 +212,7 @@ public final class CJKRenderer {
 	 * @param baselineY 基線
 	 * @param fontSize 字型大小（像素），通常傳入 Font.lineHeight
 	 */
-	public static int drawGlyph(int codepoint, int x, int baselineY, int fontSize) {
+	public static int drawGlyph(int codepoint, int x, int baselineY, int fontSize, int color, int shadowColor) {
 		if (fontSize <= 0) {
 			fontSize = 12;
 		}
@@ -239,15 +249,18 @@ public final class CJKRenderer {
 				if (vertOff < 0) {
 					vertOff = 0;
 				}
-				drawGlSprite(codepoint, scaledSize, src, bufferSize,
-						x, baselineY - asc + vertOff);
+				int y = baselineY - asc + vertOff;
+				if (shadowColor != -1) {
+					drawGlSprite(codepoint, scaledSize, src, bufferSize, x + 1, y + 1, shadowColor);
+				}
+				drawGlSprite(codepoint, scaledSize, src, bufferSize, x, y, color);
 				return charWidth;
 			} catch (Throwable t) {
 				// GL 渲染失敗 → 退回只算寬度，不崩潰
 				return charWidth;
 			}
 		}
-		return drawGlyphSoftwareToRaster(codepoint, x, baselineY, fontSize, fm, src, bufferSize, charWidth);
+		return drawGlyphSoftwareToRaster(codepoint, x, baselineY, fontSize, fm, src, bufferSize, charWidth, color, shadowColor);
 	}
 
 	/**
@@ -255,7 +268,7 @@ public final class CJKRenderer {
 	 * 地圖在 GL 模式是 SoftwareSprite 離屏渲染，字元必須寫進 SoftwareRaster（再由 GlRaster.drawPixels 上傳），
 	 * 不能走 GL sprite 分支（那會直接畫到 framebuffer）。
 	 */
-	public static int drawGlyphSoftware(int codepoint, int x, int baselineY, int fontSize) {
+	public static int drawGlyphSoftware(int codepoint, int x, int baselineY, int fontSize, int color, int shadowColor) {
 		if (fontSize <= 0) {
 			fontSize = 12;
 		}
@@ -280,14 +293,14 @@ public final class CJKRenderer {
 		g.drawString(new String(Character.toChars(codepoint)), 0, scaledSize);
 		int[] src = new int[bufferSize * bufferSize];
 		buf.image.getRGB(0, 0, bufferSize, bufferSize, src, 0, bufferSize);
-		return drawGlyphSoftwareToRaster(codepoint, x, baselineY, fontSize, fm, src, bufferSize, charWidth);
+		return drawGlyphSoftwareToRaster(codepoint, x, baselineY, fontSize, fm, src, bufferSize, charWidth, color, shadowColor);
 	}
 
 	/**
 	 * 全尺寸版（不套用大字型縮小）。供 WorldMapFont 地圖 label 使用：地圖字型 font17-30
 	 * 若不套用縮小會保持與英文 Helvetica 同級大小。
 	 */
-	public static int drawGlyphSoftwareFull(int codepoint, int x, int baselineY, int fontSize) {
+	public static int drawGlyphSoftwareFull(int codepoint, int x, int baselineY, int fontSize, int color, int shadowColor) {
 		if (fontSize <= 0) {
 			fontSize = 12;
 		}
@@ -312,24 +325,16 @@ public final class CJKRenderer {
 		g.drawString(new String(Character.toChars(codepoint)), 0, scaledSize);
 		int[] src = new int[bufferSize * bufferSize];
 		buf.image.getRGB(0, 0, bufferSize, bufferSize, src, 0, bufferSize);
-		return drawGlyphSoftwareToRaster(codepoint, x, baselineY, fontSize, fm, src, bufferSize, charWidth);
+		return drawGlyphSoftwareToRaster(codepoint, x, baselineY, fontSize, fm, src, bufferSize, charWidth, color, shadowColor);
 	}
 
 	/** SoftwareRaster 渲染共用邏輯（drawGlyph 與 drawGlyphSoftware 共用）。 */
 	private static int drawGlyphSoftwareToRaster(int codepoint, int x, int baselineY, int fontSize,
-			FontMetrics fm, int[] src, int bufferSize, int charWidth) {
+			FontMetrics fm, int[] src, int bufferSize, int charWidth, int color, int shadowColor) {
 		// 安全保護：SoftwareRaster 未初始化（如右鍵選單渲染時）→ 只算寬度不繪製，避免 NPE
 		if (SoftwareRaster.pixels == null || SoftwareRaster.width <= 0 || SoftwareRaster.height <= 0) {
 			return charWidth;
 		}
-
-		int rasterW = SoftwareRaster.width;
-		int rasterH = SoftwareRaster.height;
-		int[] pixels = SoftwareRaster.pixels;
-		int clipLeft = SoftwareRaster.clipLeft;
-		int clipTop = SoftwareRaster.clipTop;
-		int clipRight = SoftwareRaster.clipRight;
-		int clipBottom = SoftwareRaster.clipBottom;
 
 		int ascender = fm.getAscent();
 		// 縮小後字元在 lineHeight 內垂直置中，避免文字上移被框線擋住
@@ -339,6 +344,23 @@ public final class CJKRenderer {
 			vertOffset = 0;
 		}
 		int top = baselineY - ascender + vertOffset;
+		// 陰影 pass（+1,+1，黑色），再主色 pass
+		if (shadowColor != -1) {
+			blendGlyph(src, x + 1, top + 1, bufferSize, shadowColor);
+		}
+		blendGlyph(src, x, top, bufferSize, color);
+		return charWidth;
+	}
+
+	/** 把字元遮罩用指定顏色混合進 SoftwareRaster。 */
+	private static void blendGlyph(int[] src, int x, int top, int bufferSize, int color) {
+		int rasterW = SoftwareRaster.width;
+		int rasterH = SoftwareRaster.height;
+		int[] pixels = SoftwareRaster.pixels;
+		int clipLeft = SoftwareRaster.clipLeft;
+		int clipTop = SoftwareRaster.clipTop;
+		int clipRight = SoftwareRaster.clipRight;
+		int clipBottom = SoftwareRaster.clipBottom;
 		for (int dy = 0; dy < bufferSize; dy++) {
 			int sy = top + dy;
 			if (sy < clipTop || sy >= clipBottom) {
@@ -356,21 +378,19 @@ public final class CJKRenderer {
 				if (alpha < 16) {
 					continue;
 				}
-				int rgb = argb & 0xFFFFFF;
 				if (alpha >= 248) {
-					pixels[dstIndex + dx] = rgb;
+					pixels[dstIndex + dx] = color;
 				} else {
 					int old = pixels[dstIndex + dx];
 					int outA = alpha;
 					int invA = 256 - outA;
-					int r = ((old >> 16 & 0xFF) * invA + (rgb >> 16 & 0xFF) * outA) / 256;
-					int gb = ((old >> 8 & 0xFF) * invA + (rgb >> 8 & 0xFF) * outA) / 256;
-					int b = ((old & 0xFF) * invA + (rgb & 0xFF) * outA) / 256;
+					int r = ((old >> 16 & 0xFF) * invA + (color >> 16 & 0xFF) * outA) / 256;
+					int gb = ((old >> 8 & 0xFF) * invA + (color >> 8 & 0xFF) * outA) / 256;
+					int b = ((old & 0xFF) * invA + (color & 0xFF) * outA) / 256;
 					pixels[dstIndex + dx] = (r << 16) | (gb << 8) | b;
 				}
 			}
 		}
-		return charWidth;
 	}
 
 	/** 取得某個 Unicode 字元的近似寬度（像素）。 */

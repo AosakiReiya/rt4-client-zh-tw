@@ -88,7 +88,8 @@ public final class WorldMapFont {
 			if (c > 255) {
 				// 中文字元：強制 SoftwareRaster 渲染（地圖在 GL 模式為離屏 sprite）。
 				// 用全尺寸（不套用大字型縮小），使地圖 label 中文與英文 Helvetica 同級大小。
-				x += CJKRenderer.drawGlyphSoftwareFull(c, x, y + this.fontSize, this.fontSize);
+				// 著色與英文一致（color），shadow 時加黑色陰影
+				x += CJKRenderer.drawGlyphSoftwareFull(c, x, y + this.fontSize, this.fontSize, color, shadow ? 0 : -1);
 				continue;
 			}
 			int index = CHAR_INDEXES[c];

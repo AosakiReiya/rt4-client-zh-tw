@@ -168,6 +168,37 @@ public final class ScriptRunner {
 		return s;
 	}
 
+	/** 客戶端 token 翻譯 fallback：整句未命中時，依空白拆 token 逐一查表。
+	 *  僅當所有含英文字母的 token 都命中才套用（避免中英混雜）。解決技能工具提示
+	 *  「Hitpoints 43」等由技能名+數值組合的執行期字串。 */
+	private static String translateTokensClient(String s) {
+		if (s == null || s.isEmpty() || s.indexOf(' ') < 0) return s;
+		String[] words = s.split(" ");
+		StringBuilder sb = new StringBuilder();
+		boolean allTranslated = true;
+		for (String w : words) {
+			if (sb.length() > 0) sb.append(" ");
+			String tw = CacheTranslation.translate(w);
+			boolean hasLetter = false;
+			for (int i = 0; i < w.length(); i++) {
+				char c = w.charAt(i);
+				if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+					hasLetter = true;
+					break;
+				}
+			}
+			if (!hasLetter) {
+				sb.append(w);
+			} else if (!tw.equals(w)) {
+				sb.append(tw);
+			} else {
+				allTranslated = false;
+				sb.append(w);
+			}
+		}
+		return allTranslated ? sb.toString() : s;
+	}
+
 	@OriginalMember(owner = "client!ja", name = "a", descriptor = "(IIIIIZ)V")
 	public static void method2314(@OriginalArg(0) int arg0, @OriginalArg(2) int arg1, @OriginalArg(3) int arg2, @OriginalArg(4) int arg3, @OriginalArg(5) boolean arg4) {
 		if (arg0 < 1) {
@@ -2465,6 +2496,9 @@ public final class ScriptRunner {
 										String translated = CacheTranslation.translate(setTextStr);
 										if (translated.equals(setTextStr)) {
 											translated = matchNumberTemplateClient(setTextStr);
+										}
+										if (translated.equals(setTextStr)) {
+											translated = translateTokensClient(setTextStr);
 										}
 										str1 = JagString.of(translated);
 									}

@@ -243,6 +243,60 @@ public class NameTranslation {
 	private static final String D236 = "watermelon seed\u0000西瓜種子\u0000way through the tunnels\u0000隧道中挖掘開路，\u0000we have achieved. They\u0000我們所取得的成就。他們\u0000we have been forced\u0000我們被迫\u0000we will examine the\u0000我們將會檢視\u0000we will pursue justice\u0000為所有在人類\u0000weapon\u0000武器\u0000weapon_interface\u0000武器介面\u0000weaponslot\u0000weaponslot\u0000weekly-penguinhns\u0000weekly-penguinhns\u0000were the hidden treasures\u0000莫過於巴克斯托裡亞\u0000were uncovered and the\u0000被揭露了，而那\u0000werewolf bone\u0000狼人骨頭\u0000what is this place\u0000這是什麼地方\u0000what_when_matured\u0000what_when_matured\u0000when attaching extensions\u0000當在手柄上\u0000when monsters are available\u0000可作為目標時\u0000when we lived\u0000就像我們以前住在\u0000where treasures are yet\u0000當財寶依然如此\u0000which allowed her family\u0000能讓她的家族\u0000which constellation you\u0000你選擇哪一個星座\u0000which has many meanings\u0000擁有許多種含義\u0000which he mapped and\u0000他將其繪製成圖並\u0000which our senses give\u0000我們的感官在多大程度上\u0000while you are here.'\u0000當你在這裡的時候。\u0000white lily seed\u0000白百合種子\u0000whiteberry bush seed\u0000whiteberry 灌木叢種子\u0000who was Dellie's assistant\u0000他在被解僱前曾是\u0000wild_pvp_enabled\u0000野外 PVP 已啟用\u0000will lead our people\u0000將帶領我們的族人\u0000will reward us greatly\u0000Will 對我們的效忠\u0000will. Unfortunately his\u0000他的 Will 之下。不幸的是，他的\u0000willow sapling\u0000柳樹小樹\u0000wiped out and\u0000全數殲滅，且\u0000witchsExperimentKilled\u0000女巫實驗已擊殺\u0000witchsExperimentStage\u0000女巫實驗階段\u0000with Barbarians. It was\u0000野蠻人的村莊下方。它是在\u0000with Sample XJ13\u0000使用樣本 XJ13\u0000with certain chemicals and\u0000使用某些化學物質，並\u0000with confidence that these\u0000把握地說，這些\u0000with dust,\u0000伴隨著塵土，\u0000with their accursed holy\u0000神聖魔法填滿了雕像，\u0000withdraw_items\u0000提領物品\u0000withdraw_items  STRING ,\u0000withdraw_items STRING ,\u0000within this leather bound\u0000就在這本皮革裝訂的\u0000wizard tower\u0000法師塔\u0000wizards tower\u0000法師塔\u0000woad seed\u0000菘藍種子\u0000wolf bone\u0000狼骨頭\u0000wonderingwhat\u0000在想著什麼\u0000worked to banish the\u0000致力於驅逐\u0000workshop was erected\u0000工作坊隨之建立起來\u0000world, leave their armies\u0000離開了這個世界，將他們的軍隊\u0000world-event-status\u0000世界事件狀態\u0000world.activity\u0000world.activity\u0000world.allow_token_purchase\u0000world.allow_token_purchase\u0000world.april_fools_event\u0000世界.愚人節活動\u0000world.autostock_ge\u0000world.autostock_ge\u0000world.bank_booth_note_enabled\u0000world.bank_booth_note_enabled\u0000world.bank_booth_note_uim\u0000world.bank_booth_note_uim\u0000world.bank_booth_quick_open\u0000world.bank_booth_quick_open\u0000world.better_agility_pyramid_gp\u0000世界.更好的敏捷金字塔金幣\u0000world.better_dfs\u0000世界.更佳的 DFS\u0000world.boosted_trawler_rewards\u0000world.boosted_trawler_rewards\u0000world.bots_influence_ge_price\u0000world.bots_influence_ge_price\u0000world.botstock_limit\u0000世界.機器人庫存限制\u0000world.country_id\u0000world.country_id\u0000world.daily_restart\u0000world.daily_restart\u0000world.dragon_axe_use_osrs_spec\u0000world.dragon_axe_use_osrs_spec\u0000world.enable_bots\u0000world.enable_bots\u0000world.enable_botting\u0000world.enable_botting 世界.啟用指令碼機器人\u0000world.enable_castle_wars\u0000world.enable_castle_wars 世界.啟用城堡戰爭\u0000world.enable_default_clan\u0000world.enable_default_clan\u0000world.enable_global_chat\u0000world.enable_global_chat\u0000world.enhanced_deep_wilderness\u0000世界.強化版深處荒野\u0000world.force_april_fools\u0000世界.強制愚人節\u0000world.force_christmas_randoms\u0000世界.強制聖誕節隨機事件\u0000world.force_easter_randoms\u0000世界.強制復活節隨機事件\u0000world.force_halloween_randoms\u0000世界.強制萬聖節隨機事件\u0000world.ge_announcement_limit\u0000world.ge_announcement_limit 世界.GE公告限制";
 	private static final String D237 = "world.holiday_event_randoms\u0000世界.節日活動隨機事件\u0000world.home_location\u0000world.home_location\u0000world.i_want_to_cheat\u0000world.i_want_to_cheat\u0000world.increased_door_time\u0000world.increased_door_time\u0000world.ironman\u0000world.ironman\u0000world.jad_practice_enabled\u0000world.jad_practice_enabled 世界.Jad練習已啟用\u0000world.max_adv_bots\u0000world.max_adv_bots 世界.進階機器人最大數量\u0000world.members\u0000world.members\u0000world.motw_identifier\u0000world.motw_identifier 世界.MOTW識別碼\u0000world.motw_text\u0000world.motw_text 世界.MOTW文字\u0000world.name_ge\u0000world.name_ge\u0000world.new_player_announcement\u0000世界.新玩家公告\u0000world.new_player_location\u0000world.new_player_location\u0000world.personalized_shops\u0000world.personalized_shops\u0000world.player_commands\u0000world.player_commands\u0000world.playerstock_bot_offers\u0000世界.玩家庫存機器人提供\u0000world.playerstock_clear_mins\u0000world.playerstock_clear_mins\u0000world.revenant_population\u0000world.revenant_population\u0000world.ring_of_wealth_teleport\u0000世界.財富戒指傳送\u0000world.runecrafting_formula_revision\u0000世界.符文製作公式修訂\u0000world.second_bank\u0000world.second_bank\u0000world.shooting_star_ring\u0000世界.流星戒指\u0000world.show_rules\u0000world.show_rules\u0000world.skillcape_perks\u0000world.skillcape_perks\u0000world.smartpathfinder_bfs\u0000world.smartpathfinder_bfs 世界.智慧尋路BFS\u0000world.start_gui\u0000world.start_gui\u0000world.verbose_cutscene\u0000world.verbose_cutscene\u0000world.wild_pvp_enabled\u0000world.wild_pvp_enabled 世界.野外PvP已啟用\u0000world.wilderness_exclusive_loot\u0000世界.荒野專屬戰利品\u0000world.world_id\u0000world.world_id\u0000world.xp_rates\u0000world.xp_rates\u0000worldMap:viewing\u0000世界地圖:檢視中\u0000worry about feeding\u0000擔心餵養\u0000worshippers to further his\u0000以進一步推動他的\u0000would override any verbal\u0000將覆蓋任何口頭的\u0000written by Anita\u0000由安妮塔所著\u0000wydinEmployee\u0000威丁員工\u0000xprate\u0000經驗值倍率\u0000yew sapling\u0000紫杉木小樹\u0000you  have\u0000你已\u0000you would think\u0000你本以為\u0000your account from hijackers\u0000您的帳號不被劫持者\u0000your friends, family, and\u0000您的朋友、家人，以及\u0000your opponents movement\u0000對手的移動\u0000yourself but not easily\u0000但不能讓其他人輕易\u0000yyyy-MM-dd'T'HH:mm:ssXX\u0000yyyy-MM-dd'T'HH:mm:ssXX\u0000zammybrewdrinker\u0000zammybrewdrinker\u0000zammymixdrinker\u0000zammymixdrinker\u0000zammymixlowhp\u0000zammymixlowhp\u0000zmi:bankaction\u0000zmi:銀行動作\u0000zogre bone\u0000佐格雷骨頭\u0000zombie bone\u0000殭屍骨頭\u0000} been read\u0000} 已被閱讀\u0000~ The Observatory ~\u0000~ 天文臺 ~\u0000~ next ~\u0000~ 下一個 ~\u0000~ previous ~\u0000~ 上一個 ~\u0000~Kent\u0000~肯特";
 
+	private static final String D238 =
+		"A key to a chest\u0000通往寶箱的鑰匙\u0000Adamant gold-trimmed armour set (l)\u0000精鋼金邊盔甲套裝 (l)\u0000"
+		+ "Adamant gold-trimmed armour set (sk)\u0000精鋼金邊盔甲套裝 (sk)\u0000"
+		+ "Adamant trimmed armour set (l)\u0000精鋼飾邊盔甲套裝 (l)\u0000"
+		+ "Adamant trimmed armour set (sk)\u0000精鋼飾邊盔甲套裝 (sk)\u0000Armadyl communiqu\u0000阿瑪迪爾通訊\u0000"
+		+ "Black gold-trimmed armour set (l)\u0000黑色金邊盔甲套裝 (l)\u0000"
+		+ "Black gold-trimmed armour set (sk)\u0000黑色金邊盔甲套裝 (sk)\u0000"
+		+ "Black trimmed armour set (l)\u0000黑色飾邊盔甲套裝 (l)\u0000"
+		+ "Black trimmed armour set (sk)\u0000黑色飾邊盔甲套裝 (sk)\u0000Bowl of milk and honey\u0000牛奶蜂蜜碗\u0000"
+		+ "Bowl of milk, honey and guam\u0000牛奶、蜂蜜與關島草碗\u0000"
+		+ "Cannon balls (level 80 approx.)\u0000砲彈（約等級 80）\u0000"
+		+ "Corrupt dragon med helm (deg)\u0000墮落龍中型頭盔 (deg)\u0000"
+		+ "Corrupt dragon sq shield (deg)\u0000墮落龍方盾 (deg)\u0000"
+		+ "Corrupt morrigan's leather body (deg)\u0000墮落莫里根皮甲 (deg)\u0000"
+		+ "Corrupt morrigan's leather chaps (deg)\u0000墮落莫里根皮護腿 (deg)\u0000"
+		+ "Corrupt statius' full helm (deg)\u0000墮落史塔提斯全罩頭盔 (deg)\u0000"
+		+ "Corrupt zuriel's robe bottom (deg)\u0000墮落祖瑞爾長袍下裝 (deg)\u0000"
+		+ "Corrupt zuriel's robe top (deg)\u0000墮落祖瑞爾長袍上衣 (deg)\u0000"
+		+ "Dragon chain armour set (l)\u0000龍鱗鎧甲套裝 (l)\u0000Dragon chain armour set (sk)\u0000龍鱗鎧甲套裝 (sk)\u0000"
+		+ "Dragon plate armour set (l)\u0000龍板甲套裝 (l)\u0000Dragon plate armour set (sk)\u0000龍板甲套裝 (sk)\u0000"
+		+ "Enchant dragonstn.\u0000附魔龍石\u0000Ex-ex-parrot in a magic cage\u0000魔法籠中的前前任鸚鵡\u0000"
+		+ "Ex-parrot in a magic cage\u0000魔法籠中的前任鸚鵡\u0000Fake monocle, moustache and nose\u0000假單眼鏡、鬍子與鼻子\u0000"
+		+ "Female h.a.m.\u0000女性 h.a.m.\u0000Guam in a box?\u0000盒中關島草？\u0000"
+		+ "Loop half of a key\u0000鑰匙環的一半\u0000Male h.a.m.\u0000男性 h.a.m.\u0000"
+		+ "Premade blurb' sp.\u0000預製藍色水果特調\u0000Raw turkey\u0000生火雞\u0000"
+		+ "Ring of the Star Sprite\u0000星之精靈戒指\u0000Rise from the ashes scroll\u0000浴火重生卷軸\u0000"
+		+ "Rune gold-trimmed armour set (l)\u0000符文金邊盔甲套裝 (l)\u0000"
+		+ "Rune gold-trimmed armour set (sk)\u0000符文金邊盔甲套裝 (sk)\u0000"
+		+ "Rune trimmed armour set (l)\u0000符文飾邊盔甲套裝 (l)\u0000"
+		+ "Rune trimmed armour set (sk)\u0000符文飾邊盔甲套裝 (sk)\u0000Seaweed in a box?\u0000盒中海藻？\u0000"
+		+ "Tome of xp 2nd ed (1)\u0000經驗值之書 第二版 (1)\u0000Tome of xp 2nd ed (2)\u0000經驗值之書 第二版 (2)\u0000"
+		+ "Tome of xp 2nd ed (3)\u0000經驗值之書 第二版 (3)\u0000Tooth half of a key\u0000鑰匙齒的一半\u0000"
+		+ "Turkey book\u0000火雞之書\u0000Sacred clay pouch (class 1)\u0000神聖黏土袋 (等級 1)\u0000"
+		+ "Sacred clay pouch (class 2)\u0000神聖黏土袋 (等級 2)\u0000"
+		+ "Sacred clay pouch (class 3)\u0000神聖黏土袋 (等級 3)\u0000"
+		+ "Sacred clay pouch (class 4)\u0000神聖黏土袋 (等級 4)\u0000"
+		+ "Sacred clay pouch (class 5)\u0000神聖黏土袋 (等級 5)\u0000";
+
+	private static final String D239 =
+		"A cart full of logs\u0000一車滿載的原木\u0000A gap through the wall\u0000牆上的縫隙\u0000Barrier.\u0000屏障。\u0000"
+		+ "Big, big boulder...\u0000非常大的巨石...\u0000Board ( Pay 10 )\u0000上船 ( 支付 10 )\u0000"
+		+ "Easter bird perch.\u0000復活節鳥棲木。\u0000Evergreen.\u0000常青樹。\u0000Fire!\u0000著火！\u0000"
+		+ "Grandfather clock\u0000祖父鐘\u0000Melted candle.\u0000融化了的蠟燭。\u0000Odd markings.\u0000奇怪的標記。\u0000"
+		+ "Pillar candle flame.\u0000柱狀蠟燭火焰。\u0000Pillar candle.\u0000柱狀蠟燭。\u0000"
+		+ "Relabelled crate (newts and toads)\u0000重新貼標的木箱 (蠑螈與蟾蜍)\u0000Restraining table.\u0000約束檯。\u0000"
+		+ "The middle of a fireplace\u0000壁爐的中間\u0000Left side of a fireplace\u0000壁爐的左側\u0000"
+		+ "Right side of a fireplace\u0000壁爐的右側\u0000"
+		+ "Wrongly labelled crate (newts and toads)\u0000貼錯標籤的木箱 (蠑螈與蟾蜍)\u0000"
+		+ "Tree stump (level 20 approx.)\u0000樹樁（約等級 20）\u0000Stop!\u0000停！\u0000"
+		+ "A pile of broken glass\u0000一堆碎玻璃\u0000A wanderer.\u0000一名流浪者。\u0000"
+		+ "Aluft Gianne snr.\u0000老亞魯夫特·吉安內\u0000Gianne jnr.\u0000小吉安內\u0000Bees!\u0000蜜蜂！\u0000"
+		+ "Billy, a guard of Falador\u0000比利，法魯多的一名守衛\u0000"
+		+ "Bob, another guard of Falador\u0000鮑伯，法魯多的另一名守衛\u0000The Lady of the Lake\u0000湖中女士\u0000";
+
 	private static Map<String, String> MAP;
 
 	private static Map<String, String> map() {
@@ -723,6 +777,10 @@ public class NameTranslation {
 		{ String[] p = D236.split("\u0000");
 			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
 		{ String[] p = D237.split("\u0000");
+			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
+		{ String[] p = D238.split("\u0000");
+			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
+		{ String[] p = D239.split("\u0000");
 			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
 		// 地圖裸地名補充（Tutorial Island/Burthorpe/Yanille 等不在 D 表）
 		String[] extra = {

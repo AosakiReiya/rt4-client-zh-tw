@@ -280,7 +280,7 @@ public abstract class Font extends SecondaryNode {
 				if (local6 == -1) {
 					if (local22 > 255) {
 						// CJK/Unicode 字元：一律走 AWT 渲染到 SoftwareRaster（介面文字在 GL 模式亦為 sprite 化）
-						arg1 += CJKRenderer.drawGlyph(local22, arg1, local4 + this.lineHeight, this.lineHeight);
+						arg1 += CJKRenderer.drawGlyph(local22, arg1, local4 + this.lineHeight, this.lineHeight, colorOverride, shadowColorOverride);
 						local8 = local22;
 						continue;
 					}
@@ -975,7 +975,7 @@ public abstract class Font extends SecondaryNode {
 				if (local6 == -1) {
 					if (local24 > 255) {
 						// CJK/Unicode 字元：一律走 AWT 渲染到 SoftwareRaster
-						arg1 += CJKRenderer.drawGlyph(local24, arg1, local4 + this.lineHeight, this.lineHeight);
+						arg1 += CJKRenderer.drawGlyph(local24, arg1, local4 + this.lineHeight, this.lineHeight, colorOverride, shadowColorOverride);
 						local8 = local24;
 						continue;
 					}
