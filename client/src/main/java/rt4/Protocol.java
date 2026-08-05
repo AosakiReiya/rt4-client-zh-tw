@@ -2567,7 +2567,12 @@ public class Protocol {
 				if (type == 3) {
 					component = InterfaceList.getComponent(i);
 					if (!change.stringArg.strEquals(component.text)) {
-						component.text = change.stringArg;
+						// 伺服器已用伺服器翻譯表翻譯，但動態字串（如 "Stab: +0"）會漏——
+						// 客戶端再套一層 CacheTranslation 萬用 fallback 當安全網
+						String protoStr = change.stringArg.toString();
+						String protoZh = CacheTranslation.translate(protoStr);
+						if (protoZh == null || protoZh.isEmpty()) protoZh = protoStr;
+						component.text = JagString.of(protoZh);
 						InterfaceList.redraw(component);
 					}
 				} else if (type == 4) {

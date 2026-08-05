@@ -297,6 +297,19 @@ public class NameTranslation {
 		+ "Billy, a guard of Falador\u0000比利，法魯多的一名守衛\u0000"
 		+ "Bob, another guard of Falador\u0000鮑伯，法魯多的另一名守衛\u0000The Lady of the Lake\u0000湖中女士\u0000";
 
+	private static final String D240 =
+		"Al Kharid Palace\u0000阿爾·卡里德宮殿\u0000Al Kharid Mine\u0000阿爾·卡里德礦場\u0000"
+		+ "Varrock Palace\u0000瓦洛克宮殿\u0000East Varrock\u0000東瓦洛克\u0000Draynor Crossroads\u0000卓奈爾十字路口\u0000"
+		+ "Rune Essence Mine\u0000符文精髓礦場\u0000TzHaar City\u0000茲哈爾城\u0000Gnome Stronghold\u0000侏儒要塞\u0000"
+		+ "Mountain Camp\u0000山間營地\u0000Piscatoris\u0000皮斯卡托里斯\u0000Ogre City\u0000食人魔之城\u0000"
+		+ "Uzer\u0000烏澤爾\u0000Kharidian Desert\u0000卡里迪安沙漠\u0000Dwarven Mines\u0000矮人礦場\u0000"
+		+ "God Wars Dungeon\u0000神戰地牢\u0000Rogue's Den\u0000盜賊巢穴\u0000Warriors' Guild\u0000戰士公會\u0000"
+		+ "Magic Guild\u0000魔法公會\u0000Rangers' Guild\u0000遊俠公會\u0000Woodcutting Guild\u0000伐木公會\u0000"
+		+ "Agility Arena\u0000敏捷競技場\u0000Blast Furnace\u0000高爐\u0000Pest Control\u0000害蟲控制\u0000"
+		+ "TzHaar Fight Cave\u0000茲哈爾戰鬥洞穴\u0000TzHaar Fight Pits\u0000茲哈爾鬥技場\u0000"
+		+ "Stronghold of Security\u0000安全要塞\u0000Mage Training Arena\u0000法師訓練競技場\u0000"
+		+ "Sorceress's Garden\u0000女巫之園\u0000Zanaris\u0000扎納里斯\u0000Lair of Tarn Razorlor\u0000塔恩·剃刀勞爾巢穴\u0000";
+
 	private static Map<String, String> MAP;
 
 	private static Map<String, String> map() {
@@ -782,6 +795,8 @@ public class NameTranslation {
 			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
 		{ String[] p = D239.split("\u0000");
 			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
+		{ String[] p = D240.split("\u0000");
+			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
 		// 地圖裸地名補充（Tutorial Island/Burthorpe/Yanille 等不在 D 表）
 		String[] extra = {
 			"Tutorial Island", "教學島", "Burthorpe", "伯索普", "Yanille", "亞尼勒",
@@ -870,6 +885,14 @@ public class NameTranslation {
 			return s;
 		}
 		return r + " (" + s + ")";
+	}
+
+	/** 只取中文譯文（非中英結合）。未命中回傳 null。供 CacheTranslation 萬用 fallback 查詢物品/NPC/Loc 名。 */
+	public static String lookupZh(String s) {
+		if (s == null || s.isEmpty()) return null;
+		String r = map().get(s);
+		if (r == null || r.equals(s)) return null;
+		return r;
 	}
 
 	/** 地圖專用中英結合：回傳「中文<br>(英文)」兩行（WorldMap splitParagraph 依 <br> 換行）。 */

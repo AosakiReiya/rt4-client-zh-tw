@@ -35,7 +35,7 @@ public class CacheTranslation {
 	private static final String DATA31 = "Churn\u0000攪拌\u0000Count\u0000計數\u0000Swim\u0000游泳\u0000Look-up\u0000查詢\u0000Spectate\u0000觀戰\u0000Unwrap presents\u0000拆開禮物\u0000Take-marionette\u0000拿取-木偶\u0000Paint-bauble\u0000繪製-裝飾球\u0000Take-decoration\u0000拿取-裝飾品\u0000Take-rock\u0000拿取-岩石\u0000Take-sigil\u0000拿取-符印\u0000Load\u0000載入\u0000Empty-out\u0000清空\u0000Fire!\u0000開火！\u0000Loot\u0000戰利品\u0000Plunder\u0000掠奪物\u0000Ransack\u0000搜刮\u0000Count-plunder\u0000計算-掠奪物\u0000Store-plunder\u0000儲存-掠奪物\u0000Take-powder\u0000拿取-粉末\u0000Waterproof\u0000防水\u0000Shape-canoe\u0000塑造-獨木舟\u0000Float Log\u0000漂浮原木\u0000Float Canoe\u0000漂浮獨木舟\u0000Paddle Log\u0000槳木頭\u0000Paddle Canoe\u0000槳獨木舟\u0000Make-canoe\u0000製作獨木舟\u0000Buy-food\u0000購買食物\u0000Buy-items\u0000購買物品\u0000Swing Across\u0000盪過去\u0000Swing\u0000盪\u0000Pick Nuts\u0000拿取果仁\u0000Pick Banana\u0000拿取香蕉\u0000Take-Coffin\u0000拿取棺材\u0000Escape\u0000逃脫\u0000Stand-on\u0000站在上面\u0000Get-down\u0000下來\u0000Pray\u0000祈禱\u0000Sit-on\u0000坐在上面\u0000Build-in\u0000建造在內\u0000Force\u0000強制\u0000Remove-room\u0000移除房間\u0000Set-up\u0000設定\u0000Hoop\u0000圓環\u0000Throw-at\u0000投擲目標\u0000Shoot-at\u0000射擊目標\u0000Draynor Village\u0000卓奈爾村\u0000Rub\u0000摩擦\u0000Take-kettle\u0000拿取水壺\u0000Sleep-in\u0000睡在...裡面\u0000Direct-portal\u0000直接傳送門\u0000Scry\u0000占卜\u0000Challenge-mode\u0000挑戰模式\u0000Upgrade\u0000升級\u0000Work-at\u0000在...工作\u0000Make-helmet\u0000製造頭盔\u0000Build\u0000建造\u0000Evade-event\u0000躲避事件\u0000Continue-trek\u0000繼續跋涉\u0000Escape-event\u0000逃脫事件\u0000Return-to-Burgh\u0000返回伯格\u0000Look-inside\u0000向內看\u0000Remove-pot\u0000取走罐子\u0000Remove-bone\u0000移除骨頭\u0000Use-logs\u0000使用原木\u0000Use-driftwood\u0000使用漂流木\u0000Climb Down\u0000爬下去\u0000Jump-out\u0000跳出來\u0000Use-lift\u0000使用升降機\u0000Take-beam\u0000拿取樑\u0000Take-pulley-beam\u0000拿取滑輪樑\u0000Take-rope\u0000拿取繩索\u0000Carpent\u0000卡本特\u0000Throw\u0000投擲\u0000Unblock\u0000疏通\u0000Take-rum\u0000拿取蘭姆酒\u0000Pump\u0000抽水\u0000Vent\u0000通風\u0000Take-log\u0000拿取原木\u0000Take-tool\u0000拿取工具\u0000Cut-down\u0000砍倒\u0000Peer-through\u0000窺視\u0000Enter-cloud\u0000進入雲層\u0000Leave Tomb\u0000離開墳墓\u0000Check for Snakes\u0000檢查是否有蛇\u0000Charm Snake\u0000施法魅惑蛇\u0000Step-on\u0000踩踏\u0000Admire\u0000欣賞\u0000Grapple\u0000鉤爪\u0000Take-bowl\u0000拿取碗\u0000Sing-glass\u0000唱誦玻璃\u0000Revert-crystal\u0000還原水晶\u0000test\u0000測試\u0000Kick-down\u0000踢倒\u0000Crawl-under\u0000爬過下方\u0000Fix\u0000修理\u0000Bend\u0000彎曲\u0000Make-ball-of\u0000將...製成球\u0000Pull Up\u0000拉起\u0000Steal\u0000偷竊\u0000Dismantle\u0000拆解\u0000Set-trap\u0000設置陷阱\u0000Deactivate\u0000停用\u0000Trap\u0000陷阱\u0000Flush\u0000沖洗\u0000Shout-over\u0000大聲蓋過\u0000Pull-down\u0000拉下\u0000Push-up\u0000推起\u0000Drink-from\u0000從...飲用\u0000Dunk\u0000浸入\u0000Block\u0000阻擋\u0000Take-runes\u0000拿取符文\u0000Take-arrows\u0000拿取箭矢\u0000Stock-up\u0000囤積\u0000Take-crackers\u0000拿取餅乾\u0000Take-tofu\u0000拿取豆腐\u0000Take-worms\u0000拿取蠕蟲\u0000Take-vial\u0000拿取小瓶\u0000Take-meat\u0000拿取肉\u0000Get-spikes\u0000獲得尖刺";
 	private static final String DATA32 = "Tread-softly\u0000小心行走\u0000Convert\u0000轉換\u0000Cut down\u0000砍倒\u0000Smelt-ore\u0000熔煉礦石\u0000Cut-wood\u0000砍伐木材\u0000Cross-bridge\u0000穿過橋樑\u0000Exit-cave\u0000離開洞穴\u0000Decapitate\u0000斬首\u0000Add-bottom\u0000添加到底部\u0000Return-to-Paterdomus\u0000返回 Paterdomus\u0000Excavate\u0000挖掘\u0000Take-egg\u0000拿取蛋\u0000Insert-kebbit\u0000插入凱比特\u0000Untie\u0000解開\u0000Walk-along\u0000沿著走\u0000Talk-into\u0000說服\u0000Wind-up\u0000上發條\u0000Turn-off\u0000關掉\u0000Push-through\u0000擠過去\u0000Dive in\u0000潛入\u0000Construct\u0000建造\u0000Rummage\u0000翻找\u0000Take From\u0000從...拿取\u0000Reach\u0000觸及\u0000Free\u0000自由\u0000Break\u0000打破\u0000Warm-by\u0000溫暖\u0000Tie-rope\u0000繫繩索\u0000Move\u0000移動\u0000Bang\u0000砰然聲\u0000Climb-off\u0000爬下\u0000Crawl\u0000爬行\u0000Peek\u0000窺視\u0000J-mod Options\u0000J-mod 選項\u0000Prune\u0000修剪\u0000Slide-down\u0000滑下\u0000Say-name\u0000說出名字\u0000Adjust\u0000調整\u0000Add-to\u0000添加至\u0000Leave through\u0000從...離開\u0000Stoke\u0000添柴\u0000Push through\u0000穿過\u0000Remove fuel\u0000移除燃料\u0000Make-wish\u0000許願\u0000Infuse-pouch\u0000注入袋子\u0000Renew-points\u0000更新點數\u0000Check-contents\u0000查看內容物\u0000Flag\u0000旗幟\u0000Take-Egg\u0000拿取蛋\u0000Pull-back\u0000拉回\u0000Read-plaque on\u0000閱讀上的銘牌\u0000enter\u0000進入\u0000Crouch\u0000蹲下\u0000Deposit-Eggs\u0000存放蛋\u0000Leave-Warren\u0000離開地鼠窩\u0000Add-Chocolate\u0000加入巧克力\u0000Add-Egg\u0000加入蛋\u0000Adjust-Temperature\u0000調整溫度\u0000Take-Bucket\u0000拿取水桶\u0000Fill-Buckets\u0000裝滿水桶\u0000Dip-Egg\u0000浸泡蛋\u0000View-game\u0000查看遊戲\u0000Take-stone\u0000拿取石頭\u0000climb-up\u0000攀爬\u0000Jump-thru\u0000跳過\u0000Climb-thru\u0000鑽過\u0000Squeeze-under\u0000擠過\u0000Go-through-wall\u0000穿牆\u0000Mine-through\u0000挖掘穿過\u0000Push-over\u0000推倒\u0000Tell-story\u0000講故事\u0000Listen\u0000聆聽\u0000Jiggle\u0000搖晃\u0000Shout-through\u0000喊叫穿過\u0000Dive\u0000潛水\u0000Raise\u0000舉起\u0000Taunt-through\u0000嘲諷穿過\u0000Add-logs\u0000添加原木\u0000Change\u0000變更\u0000Levitate\u0000漂浮\u0000Cast-Alchemy\u0000施展煉金術\u0000Cast-Teleport\u0000施展傳送術\u0000Peek-in\u0000窺視\u0000Look-over\u0000查看\u0000Stir\u0000攪拌\u0000Fill-bowl\u0000裝滿碗\u0000Move-creature\u0000移動生物\u0000Extract-creature\u0000提取生物\u0000Remove-label\u0000移除標籤\u0000Sweep-away\u0000清掃掉\u0000Deposit-all\u0000全部存放\u0000Take-clay\u0000拿取黏土\u0000Take-barrier\u0000拿取障礙物\u0000Take-weapon\u0000拿取武器\u0000Take-armour\u0000拿取護甲\u0000Take-bow\u0000拿取弓\u0000Take-potion\u0000拿取藥水\u0000Take-food\u0000拿取食物\u0000Take-pouch\u0000拿取袋子\u0000Process\u0000處理\u0000Cross-over\u0000越過\u0000Reposition\u0000重新定位\u0000Check-bowl\u0000檢查碗\u0000Squeeze-into\u0000擠進\u0000Borrow\u0000借用\u0000Steal-keys\u0000偷鑰匙\u0000Step\u0000踏步\u0000Exit-room\u0000離開房間\u0000Shout-in\u0000大聲喊叫\u0000Harvest-twigs\u0000採集提格\u0000Read-book\u0000閱讀書籍";
 
-	private static final String DATA_EXTRA = "Total Level\u0000總等級\u0000Current\u0000目前\u0000Total XP\u0000總經驗值\u0000Current XP\u0000目前經驗值\u0000Combat Level\u0000戰鬥等級\u0000XP to level\u0000升級所需經驗值\u0000Members\u0000會員\u0000Free-to-play\u0000免費遊玩\u0000Total Xp\u0000總經驗值\u0000Skillcape\u0000技能披風\u0000Skillcape (t)\u0000技能披風 (t)\u0000Levels\u0000等級\u0000Max level\u0000最高等級\u0000Overall\u0000整體\u0000Overall XP\u0000整體經驗值\u0000Rank\u0000排名\u0000Score\u0000分數\u0000Attack XP\u0000攻擊經驗值\u0000Defence XP\u0000防禦經驗值\u0000Strength XP\u0000力量經驗值\u0000Hitpoints XP\u0000生命值經驗值\u0000Ranged XP\u0000遠程經驗值\u0000Prayer XP\u0000祈禱經驗值\u0000Magic XP\u0000魔法經驗值\u0000Cooking XP\u0000烹飪經驗值\u0000Woodcutting XP\u0000砍伐經驗值\u0000Fletching XP\u0000製作經驗值\u0000Fishing XP\u0000釣魚經驗值\u0000Firemaking XP\u0000生火經驗值\u0000Crafting XP\u0000製作經驗值\u0000Smithing XP\u0000鍛造經驗值\u0000Mining XP\u0000採礦經驗值\u0000Herblore XP\u0000草藥學經驗值\u0000Agility XP\u0000敏捷經驗值\u0000Thieving XP\u0000盜竊經驗值\u0000Slayer XP\u0000獵殺經驗值\u0000Farming XP\u0000農耕經驗值\u0000Runecrafting XP\u0000符文製作經驗值\u0000Hunter XP\u0000狩獵經驗值\u0000Construction XP\u0000建造經驗值\u0000Summoning XP\u0000召喚經驗值\u0000Dungeoneering XP\u0000地城經驗值\u0000Tutorial Island\u0000教學島\u0000Tutorial Island Progress\u0000教學島進度\u0000You Are Here\u0000你在此處\u0000Wizard's Tower\u0000法師塔\u0000Burthorpe\u0000伯索普\u0000Yanille\u0000亞尼勒\u0000Taverley\u0000塔弗利\u0000Port Sarim\u0000薩里姆港\u0000Draynor Village\u0000卓奈爾村\u0000Goblin Village\u0000哥布林村莊\u0000Seers' Village\u0000先知村\u0000Wizards' Tower\u0000法師塔\u0000Stab:\u0000刺擊：\u0000Slash:\u0000揮砍：\u0000Crush:\u0000粉碎：\u0000Range:\u0000遠程：\u0000Summoning:\u0000召喚：\u0000Prayer:\u0000祈禱：\u0000Strength:\u0000力量：\u0000Melee:\u0000近戰：\u0000Ranged:\u0000遠程：\u0000Magic:\u0000魔法：\u0000Attack:\u0000攻擊：\u0000Defence:\u0000防禦：\u0000Members:\u0000會員專屬：\u0000Members: \u0000會員專屬：\u0000Members only\u0000僅限會員\u0000Members\u0000會員";
+	private static final String DATA_EXTRA = "Total Level\u0000總等級\u0000Current\u0000目前\u0000Total XP\u0000總經驗值\u0000Current XP\u0000目前經驗值\u0000Combat Level\u0000戰鬥等級\u0000XP to level\u0000升級所需經驗值\u0000Members\u0000會員\u0000Free-to-play\u0000免費遊玩\u0000Total Xp\u0000總經驗值\u0000Skillcape\u0000技能披風\u0000Skillcape (t)\u0000技能披風 (t)\u0000Levels\u0000等級\u0000Max level\u0000最高等級\u0000Overall\u0000整體\u0000Overall XP\u0000整體經驗值\u0000Rank\u0000排名\u0000Score\u0000分數\u0000Attack XP\u0000攻擊經驗值\u0000Defence XP\u0000防禦經驗值\u0000Strength XP\u0000力量經驗值\u0000Hitpoints XP\u0000生命值經驗值\u0000Ranged XP\u0000遠程經驗值\u0000Prayer XP\u0000祈禱經驗值\u0000Magic XP\u0000魔法經驗值\u0000Cooking XP\u0000烹飪經驗值\u0000Woodcutting XP\u0000砍伐經驗值\u0000Fletching XP\u0000製作經驗值\u0000Fishing XP\u0000釣魚經驗值\u0000Firemaking XP\u0000生火經驗值\u0000Crafting XP\u0000製作經驗值\u0000Smithing XP\u0000鍛造經驗值\u0000Mining XP\u0000採礦經驗值\u0000Herblore XP\u0000草藥學經驗值\u0000Agility XP\u0000敏捷經驗值\u0000Thieving XP\u0000盜竊經驗值\u0000Slayer XP\u0000獵殺經驗值\u0000Farming XP\u0000農耕經驗值\u0000Runecrafting XP\u0000符文製作經驗值\u0000Hunter XP\u0000狩獵經驗值\u0000Construction XP\u0000建造經驗值\u0000Summoning XP\u0000召喚經驗值\u0000Dungeoneering XP\u0000地城經驗值\u0000Tutorial Island\u0000教學島\u0000Tutorial Island Progress\u0000教學島進度\u0000You Are Here\u0000你在此處\u0000Wizard's Tower\u0000法師塔\u0000Burthorpe\u0000伯索普\u0000Yanille\u0000亞尼勒\u0000Taverley\u0000塔弗利\u0000Port Sarim\u0000薩里姆港\u0000Draynor Village\u0000卓奈爾村\u0000Goblin Village\u0000哥布林村莊\u0000Seers' Village\u0000先知村\u0000Wizards' Tower\u0000法師塔\u0000Stab:\u0000刺擊：\u0000Slash:\u0000揮砍：\u0000Crush:\u0000粉碎：\u0000Range:\u0000遠程：\u0000Summoning:\u0000召喚：\u0000Prayer:\u0000祈禱：\u0000Strength:\u0000力量：\u0000Melee:\u0000近戰：\u0000Ranged:\u0000遠程：\u0000Magic:\u0000魔法：\u0000Attack:\u0000攻擊：\u0000Defence:\u0000防禦：\u0000Members:\u0000會員專屬：\u0000Members: \u0000會員專屬：\u0000Members only\u0000僅限會員\u0000Members\u0000會員\u0000Hitpoints:\u0000生命值：\u0000Mining:\u0000採礦：\u0000Smithing:\u0000鍛造：\u0000Fishing:\u0000釣魚：\u0000Cooking:\u0000烹飪：\u0000Woodcutting:\u0000砍伐：\u0000Fletching:\u0000製作：\u0000Crafting:\u0000製作：\u0000Agility:\u0000敏捷：\u0000Thieving:\u0000盜竊：\u0000Slayer:\u0000獵殺：\u0000Farming:\u0000農耕：\u0000Runecrafting:\u0000符文製作：\u0000Hunter:\u0000狩獵：\u0000Construction:\u0000建造：\u0000Herblore:\u0000草藥學：\u0000Firemaking:\u0000生火：";
 
 	public static String translate(String s) {
 		if (s == null || s.isEmpty()) return s;
@@ -333,6 +333,104 @@ public class CacheTranslation {
 			if (end < 0) end = DATA32.length();
 			return DATA32.substring(start, end);
 		}
+		// 萬用 fallback：NameTranslation（物品/NPC/Loc 名）+ 等級前綴剝離 + 單複數變體
+		String fb = universalFallback(s);
+		if (fb != null) return fb;
 		return s;
+	}
+
+	/**
+	 * 萬用翻譯 fallback：處理 skill guide 物品名（可能帶等級前綴、單複數、大小寫差異）。
+	 * 1) 剝離開頭 "N " 等級前綴後翻譯其餘（"10 Combat hood" → "10 戰鬥兜帽"）
+	 * 2) NameTranslation 物品名查詢（"Adamant kiteshield" → "精鋼風箏盾"）
+	 * 3) 單數/複數 與 大小寫 變體試查
+	 */
+	private static String universalFallback(String s) {
+		String t;
+		// 1) 等級前綴剝離："數字[ ]+名稱" → 翻譯名稱部分
+		int sp = s.indexOf(' ');
+		if (sp > 0 && sp < s.length() - 1) {
+			String prefix = s.substring(0, sp);
+			if (isNumeric(prefix)) {
+				String rest = s.substring(sp + 1).trim();
+				String zhRest = translate(rest);
+				if (!zhRest.equals(rest)) {
+					return prefix + " " + zhRest;
+				}
+			}
+		}
+		// 1b) "標籤: +數字" 形式（如 "Stab: +0"、"Hitpoints: 10/10"）→ 翻譯標籤部分
+		int colon = s.indexOf(':');
+		if (colon > 0) {
+			String label = s.substring(0, colon + 1).trim();
+			String zhLabel = lookupLabel(label);
+			if (zhLabel != null) {
+				return zhLabel + " " + s.substring(colon + 1).trim();
+			}
+		}
+		// 2) NameTranslation：物品/NPC/Loc 名稱（含中英結合，此處只取中文部分）
+		t = NameTranslation.lookupZh(s);
+		if (t != null) return t;
+		// 3) 單複數變體：剝離/補上尾部 s
+		if (s.endsWith("s") && s.length() > 3) {
+			String singular = s.substring(0, s.length() - 1);
+			t = NameTranslation.lookupZh(singular);
+			if (t != null) return t;
+			t = CacheTranslationExt.translate(singular);
+			if (t != null) return t;
+		} else {
+			String plural = s + "s";
+			t = CacheTranslationExt.translate(plural);
+			if (t != null) return t;
+			t = NameTranslation.lookupZh(plural);
+			if (t != null) return t;
+		}
+		return null;
+	}
+
+	private static boolean isNumeric(String s) {
+		if (s.isEmpty()) return false;
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (c < '0' || c > '9') return false;
+		}
+		return true;
+	}
+
+	/** 標籤查詢（不遞迴）：精確/大小寫查 DATA_EXTRA、Ext、NameTranslation；剝冒號後再試。 */
+	private static String lookupLabel(String label) {
+		String r = lookupLabelRaw(label);
+		if (r != null) return r;
+		// 剝冒號："Hitpoints:" → "Hitpoints"
+		if (label.endsWith(":")) {
+			r = lookupLabelRaw(label.substring(0, label.length() - 1));
+			if (r != null) return r + "：";
+		}
+		return null;
+	}
+
+	private static String lookupLabelRaw(String label) {
+		String needle = "\u0000" + label + "\u0000";
+		int idx = DATA_EXTRA.indexOf(needle);
+		if (idx >= 0) {
+			int start = idx + needle.length();
+			int end = DATA_EXTRA.indexOf("\u0000", start);
+			if (end < 0) end = DATA_EXTRA.length();
+			return DATA_EXTRA.substring(start, end);
+		}
+		idx = DATA_EXTRA.toLowerCase().indexOf(needle.toLowerCase());
+		if (idx >= 0) {
+			int start = idx + needle.length();
+			int end = DATA_EXTRA.indexOf("\u0000", start);
+			if (end < 0) end = DATA_EXTRA.length();
+			return DATA_EXTRA.substring(start, end);
+		}
+		String ext = CacheTranslationExt.translate(label);
+		if (ext != null) return ext;
+		ext = CacheTranslationExt.translateIgnoreCase(label);
+		if (ext != null) return ext;
+		String zh = NameTranslation.lookupZh(label);
+		if (zh != null) return zh;
+		return null;
 	}
 }
