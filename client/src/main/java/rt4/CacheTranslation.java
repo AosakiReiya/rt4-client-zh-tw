@@ -62,7 +62,8 @@ public class CacheTranslation {
 		if (m != null) return m;
 		// .tbl 已載入：DATA0-32/Ext 資料全在 EXT_MAP，跳過 1.15MB indexOf 掃描（開 UI 卡頓主因），直接走安全 decompose
 		if (!EXT_MAP.isEmpty()) {
-			return decompose(s);
+			String fd = decompose(s);
+			return fd != null ? fd : s;
 		}
 		{ String needle = "\u0000" + s + "\u0000";
 			int idx = DATA0.indexOf(needle);
