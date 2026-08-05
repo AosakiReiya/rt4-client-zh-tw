@@ -438,6 +438,20 @@ public class CacheTranslation {
 			}
 			if (all) return sb.toString();
 		}
+		// 5a) "<br>" 分隔（技能指南/祈禱/戰鬥描述執行期組合，如 "Level 01<br>Thick Skin<br>Increases your defence by 5%"）
+		if (s.indexOf("<br>") > 0) {
+			String[] parts = s.split("<br>");
+			StringBuilder sb = new StringBuilder();
+			boolean all = true;
+			for (int i = 0; i < parts.length; i++) {
+				if (i > 0) sb.append("<br>");
+				String p = parts[i].trim();
+				String zhP = translate(p);
+				if (zhP.equals(p)) { all = false; break; }
+				sb.append(zhP);
+			}
+			if (all) return sb.toString();
+		}
 		// 5b) ", " 分隔（技能指南材料清單，如 "Attack potion, Guam & eye of newt"）
 		if (s.indexOf(", ") > 0) {
 			String[] parts = s.split(", ");
@@ -458,6 +472,14 @@ public class CacheTranslation {
 			String zhType = translate(cm.group(2));
 			if (zhType != null && !zhType.equals(cm.group(2))) {
 				return "第 " + cm.group(1) + " 階 " + zhType;
+			}
+		}
+		// 5c) "You can now use the X prayer." → "你現在可以使用 X 祈禱。"
+		java.util.regex.Matcher up = USE_PRAYER_PAT.matcher(s);
+		if (up.matches()) {
+			String zhPrayer = translate(up.group(1));
+			if (zhPrayer != null && !zhPrayer.equals(up.group(1))) {
+				return "你現在可以使用 " + zhPrayer + " 祈禱" + (s.endsWith(".") ? "。" : "");
 			}
 		}
 		// 7) "Nth tier X" → "第 N 階 X"
@@ -584,6 +606,7 @@ public class CacheTranslation {
 	private static final java.util.regex.Pattern WITH_PAT = java.util.regex.Pattern.compile("^with (\\d+) ([A-Za-z ]+)$");
 	private static final java.util.regex.Pattern AFTER_START_PAT = java.util.regex.Pattern.compile("^after starting (.+)$");
 	private static final java.util.regex.Pattern AFTER_PAT = java.util.regex.Pattern.compile("^after (.+)$");
+	private static final java.util.regex.Pattern USE_PRAYER_PAT = java.util.regex.Pattern.compile("^You can now use the (.+) prayer\\.?$");
 
 	private static boolean containsCjk(String s) {
 		for (int i = 0; i < s.length(); i++) {
