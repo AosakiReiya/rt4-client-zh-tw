@@ -41,9 +41,9 @@ public class CacheTranslation {
 		if (s == null || s.isEmpty()) return s;
 		// 剝離顏色/陰影標籤後翻譯，再回填標籤（如 <col=ff9b00>Talking in: Not in chat）
 		if (TAG_PAT.matcher(s).find()) {
-			String stripped = TAG_PAT.matcher(s).replaceAll("\u0001");
-			String zh = translate(stripped);
-			if (!zh.equals(stripped)) {
+			String clean = TAG_PAT.matcher(s).replaceAll("");
+			String zh = translate(clean);
+			if (!zh.equals(clean)) {
 				return spliceTags(s, zh);
 			}
 			return s;
@@ -431,6 +431,20 @@ public class CacheTranslation {
 			boolean all = true;
 			for (int i = 0; i < parts.length; i++) {
 				if (i > 0) sb.append(" / ");
+				String p = parts[i].trim();
+				String zhP = translate(p);
+				if (zhP.equals(p)) { all = false; break; }
+				sb.append(zhP);
+			}
+			if (all) return sb.toString();
+		}
+		// 5b) ", " 分隔（技能指南材料清單，如 "Attack potion, Guam & eye of newt"）
+		if (s.indexOf(", ") > 0) {
+			String[] parts = s.split(", ");
+			StringBuilder sb = new StringBuilder();
+			boolean all = true;
+			for (int i = 0; i < parts.length; i++) {
+				if (i > 0) sb.append("、");
 				String p = parts[i].trim();
 				String zhP = translate(p);
 				if (zhP.equals(p)) { all = false; break; }
