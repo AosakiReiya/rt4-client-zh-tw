@@ -4033,7 +4033,15 @@ public final class CacheTranslationExt {
 		+ "Attack and Strength\u0000攻擊與力量\u0000"
 		+ "You now have all the levels necessary to complete \u0000你現在已擁有完成 <col=yellow>任務</col> 所需的所有等級\u0000"
 		+ "Scroll map\u0000捲軸地圖\u0000Your position\u0000你的位置\u0000Scroll map:\u0000捲軸地圖：\u0000"
-		+ "Stealing Creation\u0000竊取創造\u0000Members Only\u0000僅限會員\u0000Members only\u0000僅限會員\u0000";
+		+ "Stealing Creation\u0000竊取創造\u0000Members Only\u0000僅限會員\u0000Members only\u0000僅限會員\u0000"
+		+ "Accept aid (currently off)\u0000接受協助（目前關閉）\u0000Accept aid (currently on)\u0000接受協助（目前開啟）\u0000"
+		+ "Mouse buttons (currently 2)\u0000滑鼠按鍵（目前 2）\u0000Mouse buttons (currently on)\u0000滑鼠按鍵（目前開啟）\u0000"
+		+ "Mouse buttons (currently off)\u0000滑鼠按鍵（目前關閉）\u0000Chat effects (currently on)\u0000聊天特效（目前開啟）\u0000"
+		+ "Chat effects (currently off)\u0000聊天特效（目前關閉）\u0000"
+		+ "Split Private Chat (currently on)\u0000分割私人聊天（目前開啟）\u0000"
+		+ "Split Private Chat (currently off)\u0000分割私人聊天（目前關閉）\u0000"
+		+ "Friends List - RuneScape XXX\u0000好友清單 - RuneScape XXX\u0000"
+		+ "Talking in: Not in chat\u0000說話頻道：不在聊天中\u0000";
 
 	private static final String[] DATAS = {D1, D2, D3, D4, D5, D6, D7};
 
