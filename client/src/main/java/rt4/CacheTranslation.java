@@ -57,6 +57,20 @@ public class CacheTranslation {
 
 	public static String translate(String s) {
 		if (s == null || s.isEmpty()) return s;
+		// 前綴標籤處理（好友/設定等 <col=ff9b00>Talking in: ...）：剝前綴標籤、翻譯其餘、回加前綴
+		String raw = s;
+		java.util.regex.Matcher lm = LEAD_TAG.matcher(raw);
+		StringBuilder tagPrefix = new StringBuilder();
+		while (lm.lookingAt()) {
+			tagPrefix.append(lm.group());
+			raw = raw.substring(lm.end());
+			lm = LEAD_TAG.matcher(raw);
+		}
+		if (tagPrefix.length() > 0) {
+			String zh = translate(raw);
+			if (!zh.equals(raw)) return tagPrefix.toString() + zh;
+			return s;
+		}
 		// 外部資源檔翻譯表（O(1) 精確查表）
 		String m = EXT_MAP.get(s);
 		if (m != null) return m;
@@ -409,7 +423,7 @@ public class CacheTranslation {
 				}
 			}
 		}
-		// 3) "Label: value" —— 標籤與其餘部分都需翻譯才套用（避免部分翻譯）
+		// 3) "Label: value" —— 標籤與其餘部分都需翻譯才套用（避免部分翻譯）；純數字/無英文字母的 value 允許保留
 		int colon = s.indexOf(':');
 		if (colon > 0) {
 			String label = s.substring(0, colon + 1).trim();
@@ -417,10 +431,15 @@ public class CacheTranslation {
 			if (zhLabel != null) {
 				String rest = s.substring(colon + 1).trim();
 				String zhRest = translate(rest);
-				if (!zhRest.equals(rest)) {
+				if (!zhRest.equals(rest) || !hasEnglishLetter(rest)) {
 					return zhLabel + " " + zhRest;
 				}
 			}
+		}
+		// 3b) "Max items kept on death: N" → "死亡時最多保留物品：N"
+		if (s.startsWith("Max items kept on death:")) {
+			String num = s.substring("Max items kept on death:".length()).trim();
+			return "死亡時最多保留物品：" + num;
 		}
 		// 4) " - " 分隔：各段翻譯（首段可翻、其餘段為短英文時保留原文，如 "Friends List - 2009scape 1"）
 		if (s.indexOf(" - ") > 0) {
@@ -491,8 +510,40 @@ public class CacheTranslation {
 		if (wm.matches()) {
 			String skill = wm.group(2);
 			String zhSkill = translate(skill);
-			if (!zhSkill.equals(skill)) return "需 " + wm.group(1) + " " + zhSkill;
+			if (!zhSkill.equals(skill)) {
+				String r = "需 " + wm.group(1) + " " + zhSkill;
+				if (wm.group(3) != null) {
+					String zhSkill2 = translate(wm.group(4));
+					if (zhSkill2.equals(wm.group(4))) return null;
+					r += " 和 " + wm.group(3) + " " + zhSkill2;
+				}
+				return r;
+			}
 			return null;
+		}
+		// "after Quest, with N Skill (and N Skill)" → 完成 Quest 後（需 N Skill...）
+		int withComma = content.indexOf(", with ");
+		if (withComma > 0) {
+			String qPart = content.substring(0, withComma).trim();   // "after Quest"
+			String wPart = content.substring(withComma + 2).trim();  // "with N Skill..."
+			java.util.regex.Matcher wm2 = WITH_PAT.matcher(wPart);
+			if (wm2.matches()) {
+				String zhSkill = translate(wm2.group(2));
+				if (!zhSkill.equals(wm2.group(2))) {
+					String req = "，需 " + wm2.group(1) + " " + zhSkill;
+					if (wm2.group(3) != null) {
+						String zhSkill2 = translate(wm2.group(4));
+						if (zhSkill2.equals(wm2.group(4))) return null;
+						req += " 和 " + wm2.group(3) + " " + zhSkill2;
+					}
+					// find quest from "after X"
+					String quest = qPart.startsWith("after ") ? qPart.substring(6).trim() : qPart;
+					String zhQuest = translate(quest);
+					if (!zhQuest.equals(quest)) {
+						return "完成 " + zhQuest + " 後" + req;
+					}
+				}
+			}
 		}
 		java.util.regex.Matcher as = AFTER_START_PAT.matcher(content);
 		if (as.matches()) {
@@ -559,10 +610,12 @@ public class CacheTranslation {
 	}
 
 	private static final java.util.regex.Pattern CLASS_PAT = java.util.regex.Pattern.compile("^class (\\d+) (.+)$");
+	private static final java.util.regex.Pattern LEAD_TAG = java.util.regex.Pattern.compile("^<col=[0-9a-fA-F]+>|^<shad(=-?[0-9]+)?>|^</col>|^</shad>");
 	private static final java.util.regex.Pattern TIER_PAT = java.util.regex.Pattern.compile("^([1-9][0-9]?)(?:st|nd|rd|th) tier (.+)$");
-	private static final java.util.regex.Pattern WITH_PAT = java.util.regex.Pattern.compile("^with (\\d+) ([A-Za-z ]+)$");
+	private static final java.util.regex.Pattern WITH_PAT = java.util.regex.Pattern.compile("^with (\\d+) ([A-Za-z ]+?)(?: and (\\d+) ([A-Za-z ]+))?$");
 	private static final java.util.regex.Pattern AFTER_START_PAT = java.util.regex.Pattern.compile("^after starting (.+)$");
 	private static final java.util.regex.Pattern AFTER_PAT = java.util.regex.Pattern.compile("^after (.+)$");
+	private static final java.util.regex.Pattern NUM_SLASH_NUM = java.util.regex.Pattern.compile("^\\d+\\s*/\\s*\\d+$");
 
 	private static boolean containsCjk(String s) {
 		for (int i = 0; i < s.length(); i++) {
@@ -602,6 +655,8 @@ public class CacheTranslation {
 	}
 
 	private static String lookupLabelRaw(String label) {
+		String m = EXT_MAP.get(label);
+		if (m != null) return m;
 		String needle = "\u0000" + label + "\u0000";
 		int idx = DATA_EXTRA.indexOf(needle);
 		if (idx >= 0) {
