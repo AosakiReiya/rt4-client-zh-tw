@@ -817,10 +817,26 @@ public class NameTranslation {
 	/** 地圖專用中英結合：回傳「中文<br>(英文)」兩行（WorldMap splitParagraph 依 <br> 換行）。 */
 	public static String translateBilingualMap(String s) {
 		if (s == null || s.isEmpty()) return s;
-		String r = map().get(s);
-		if (r == null || r.equals(s)) {
-			return s;
+		// 剝除 <col>...<col>/<br> 標籤後查表，命中則把原標籤（含顏色）回填到中文譯文
+		String raw = s.replaceAll("<[^>]+>", "");
+		String r = map().get(raw);
+		if (r == null || r.equals(raw)) {
+			// 再試原樣（含標籤）
+			r = map().get(s);
+			if (r == null || r.equals(s)) {
+				return s;
+			}
 		}
-		return r + "<br>(" + s + ")";
+		// 把中文譯文放進原字串的 <col> 標籤（若原字串含顏色標籤）
+		String colorTag = "";
+		int ct = s.indexOf("<col");
+		if (ct >= 0) {
+			int ctEnd = s.indexOf('>', ct);
+			if (ctEnd >= 0) {
+				colorTag = s.substring(ct, ctEnd + 1);
+			}
+		}
+		String zh = colorTag + r;
+		return zh + "<br>(" + s + ")";
 	}
 }

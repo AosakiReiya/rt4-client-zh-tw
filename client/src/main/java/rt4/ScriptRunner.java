@@ -2428,10 +2428,11 @@ public final class ScriptRunner {
 										int pwdLen = str1.length();
 										StringBuilder sb = new StringBuilder(pwdLen);
 										for (int pi = 0; pi < pwdLen; pi++) sb.append('*');
-										str1 = JagString.parse(sb.toString());
+										// 用 JagString.of（非 parse）：parse 會把 * 當 (x) 跳脫解碼成 P
+										str1 = JagString.of(sb.toString());
 									} else {
 										// CS2 operand 是英文原文；setText 是顯示落點，套 CacheTranslation 避免覆蓋中文為英文
-										str1 = JagString.parse(CacheTranslation.translate(str1.toString()));
+										str1 = JagString.of(CacheTranslation.translate(str1.toString()));
 									}
 									if (!str1.strEquals(component.text)) {
 										component.text = str1;
