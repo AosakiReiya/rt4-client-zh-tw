@@ -454,6 +454,8 @@ public class CacheTranslation {
 	private static String translateParen(String content) {
 		if (content == null || content.isEmpty()) return null;
 		if (content.equalsIgnoreCase("Members Only")) return "僅限會員";
+		if (content.equalsIgnoreCase("currently on")) return "目前開啟";
+		if (content.equalsIgnoreCase("currently off")) return "目前關閉";
 		java.util.regex.Matcher wm = WITH_PAT.matcher(content);
 		if (wm.matches()) {
 			String skill = wm.group(2);
