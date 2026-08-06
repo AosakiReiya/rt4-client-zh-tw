@@ -57,6 +57,9 @@ public class CacheTranslation {
 
 	public static String translate(String s) {
 		if (s == null || s.isEmpty()) return s;
+		// 已含中文字元即視為「已翻譯」，原樣返回，避免 decompose 拆解/重排造成亂碼
+		// （聊天/動態字串已是中文時，不再被空白/括號/冒號等規則誤處理）
+		if (containsCjk(s)) return s;
 		// 前綴標籤處理（好友/設定等 <col=ff9b00>Talking in: ...）：剝前綴標籤、翻譯其餘、回加前綴
 		String raw = s;
 		java.util.regex.Matcher lm = LEAD_TAG.matcher(raw);

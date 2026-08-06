@@ -428,6 +428,11 @@ public class Buffer extends Node {
 
 	@OriginalMember(owner = "client!si", name = "a", descriptor = "(BLclient!na;)I")
 	public static int gjstrlen(@OriginalArg(1) JagString str) {
+		// 以實際序列化的 UTF-8 byte 數計算（含結尾 NUL），中文 1 字 = 3 byte，
+		// 避免 pjstr/p1 長度與真實 byte 數不符造成封包錯位/亂碼。
+		if (str.unicode != null) {
+			return str.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8).length + 1;
+		}
 		return str.length() + 1;
 	}
 
