@@ -584,12 +584,12 @@ public class CacheTranslation {
 		return null;
 	}
 
-	/** token fallback：依空白拆 token，僅當所有含英文字母的 token 都命中才套用。 */
+	/** token fallback：依空白拆 token，能翻的翻、不能翻的保留原文（部分翻譯）。 */
 	private static String translateTokens(String s) {
 		if (s.isEmpty() || s.indexOf(' ') < 0) return null;
 		String[] words = s.split(" ");
 		StringBuilder sb = new StringBuilder();
-		boolean all = true;
+		boolean any = false;
 		for (String w : words) {
 			if (sb.length() > 0) sb.append(" ");
 			boolean hasLetter = false;
@@ -604,12 +604,13 @@ public class CacheTranslation {
 			String tw = translate(w);
 			if (!tw.equals(w)) {
 				sb.append(tw);
+				if (containsCjk(tw)) any = true;
 			} else {
-				all = false;
 				sb.append(w);
 			}
 		}
-		return all ? sb.toString() : null;
+		// 至少翻出一個含中文的 token 才套用（避免把純英文的專有名詞拆成段落）
+		return any ? sb.toString() : null;
 	}
 
 	private static final java.util.regex.Pattern CLASS_PAT = java.util.regex.Pattern.compile("^class (\\d+) (.+)$");
