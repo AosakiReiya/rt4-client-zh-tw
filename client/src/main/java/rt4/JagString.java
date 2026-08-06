@@ -252,6 +252,20 @@ public final class JagString implements StringInterface {
 		}
 		if (utf8) {
 			String decoded = new String(local7.chars, 0, local7.length, StandardCharsets.UTF_8);
+			// 若 UTF-8 解碼出現替換字元（U+FFFD），原始位元組可能以 GBK/Big5 打包
+			// （Windows cache editor 常用 GBK）。嘗試這些編碼，選無 U+FFFD 的結果還原。
+			if (decoded.indexOf('\uFFFD') >= 0) {
+				for (String enc : new String[] { "GB18030", "GBK", "Big5" }) {
+					try {
+						String alt = new String(local7.chars, 0, local7.length, enc);
+						if (alt.indexOf('\uFFFD') < 0) {
+							decoded = alt;
+							break;
+						}
+					} catch (@SuppressWarnings("unused") java.io.UnsupportedEncodingException e) {
+					}
+				}
+			}
 			local7.unicode = decoded.toCharArray();
 			local7.length = decoded.length();
 			local7.chars = null;
