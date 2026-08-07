@@ -256,7 +256,7 @@ public final class ObjType {
 		if (opcode == Opcodes.model) { // 1
 			this.model = buffer.g2();
 		} else if (opcode == Opcodes.name) { // 2
-			this.name = JagString.of(NameTranslation.translate(buffer.gjstr().toString()));
+			this.name = JagString.of(NameTranslation.translateBilingual(buffer.gjstr().toString()));
 		} else if (opcode == Opcodes.zoom2d) { // 4
 			this.zoom2d = buffer.g2();
 		} else if (opcode == Opcodes.xan2d) { // 5

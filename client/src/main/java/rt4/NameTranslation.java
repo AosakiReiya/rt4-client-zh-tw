@@ -333,6 +333,31 @@ public class NameTranslation {
 		+ "Salve Graveyard\u0000薩爾夫墓園\u0000Mort Myre Swamp\u0000莫特邁爾沼澤\u0000"
 		+ "Draynor Crossroads\u0000卓奈爾十字路口\u0000Varrock Palace\u0000瓦洛克宮殿\u0000East Varrock\u0000東瓦洛克\u0000";
 
+	private static final String D_NAMES =
+	"Absolutus distancie airus\u0000絕對距離之風\u0000Aeonisig Raispher\u0000艾歐尼西格·雷史費\u0000Al Shabim\u0000阿爾·沙比姆\u0000Al Truism\u0000阿爾·特魯伊斯姆\u0000"
+	+ "Andiess Juip\u0000安迪斯朱伊普\u0000Anne Isaakson\u0000安妮艾薩克森\u0000Awwf uurrrhur\u0000喔嗚嗚嗚\u0000Bigface Oz\u0000大臉奧茲\u0000"
+	+ "Blaze Sharpeye\u0000布雷茲夏普艾\u0000Brimhaven (15,000)\u0000布林海文\u0000Brugsen Bursen\u0000布格森·布森\u0000Castus enchant avoir createur\u0000卡斯圖斯附魔創造者\u0000"
+	+ "Cool Mom227\u0000酷媽227\u0000Defeati... Ye dreaded\u0000擊敗... 你所畏懼的\u0000Echned Zekin\u0000埃克內德澤金\u0000Ed Wood\u0000艾德·伍德\u0000"
+	+ "Ezekial Lovecraft\u0000伊澤基爾·洛夫克拉夫特\u0000Filliman Tarlock\u0000費利曼·塔洛克\u0000Flaygian Screwte\u0000弗萊吉安·斯克魯特\u0000Flosi Dalksson\u0000弗洛西·達爾克森\u0000"
+	+ "Gunnar Holdstrom\u0000岡納·霍德斯特倫\u0000Hiylik Myna\u0000希伊利克·米娜\u0000Hm Val\u0000赫姆·瓦爾\u0000Irvig Senay\u0000伊爾維格·塞奈\u0000"
+	+ "Jayene Kliyn\u0000傑恩·克里恩\u0000Jofridr Mordstatter\u0000約弗里德·莫德斯塔特\u0000Johanhus Ulsbrecht\u0000約翰胡斯·烏爾斯布萊希特\u0000Kael Forshaw\u0000凱爾·福肖\u0000"
+	+ "Keepa Kettilon\u0000基帕·凱蒂隆\u0000Kjedelig Uppsen\u0000克耶德利格·烏普森\u0000Lemanto Andra\u0000萊曼托·安德拉\u0000Lisse Isaakson\u0000莉絲·艾薩克森\u0000"
+	+ "Magnus Gram\u0000馬格努斯·格蘭姆\u0000Malignius Mortifer\u0000馬利尼厄斯·莫蒂費爾\u0000Maria Gunnars\u0000瑪麗亞·岡納斯\u0000Mekritus A'hara\u0000梅克里圖斯·阿哈拉\u0000"
+	+ "Morten Holdstrom\u0000莫頓·霍德斯特倫\u0000Ochre snelm\u0000赭色蝸牛盔\u0000Olaf Hradson\u0000奧拉夫·赫德森\u0000Otto Godblessed\u0000奧托·戈德布萊斯\u0000"
+	+ "Pollnivneach (7,500)\u0000波爾尼維奇 (7,500)\u0000Possessus valius emptious,\u0000佔有者、價值、空虛\u0000Present thyself before\u0000在...面前現身\u0000Ranalph Devere\u0000蘭法·德弗\u0000"
+	+ "Ranis Drakan\u0000拉尼斯·德拉坎\u0000Razmire Keelgan\u0000拉茲米爾·基爾根\u0000Rellekka (10,000)\u0000瑞萊卡 (10,000)\u0000Rimmington (5,000)\u0000瑞明頓 (5,000)\u0000"
+	+ "Rolayne Twickit\u0000羅萊恩·特威克\u0000San Tojalon\u0000桑·托加隆\u0000Sandstone (10kg)\u0000砂岩\u0000Sandstone (1kg)\u0000砂岩\u0000"
+	+ "Sandstone (20kg)\u0000砂岩\u0000Sandstone (2kg)\u0000砂岩\u0000Sandstone (32kg)\u0000砂岩\u0000Sandstone (5kg)\u0000砂岩\u0000"
+	+ "Sarah Domin\u0000莎拉·多明\u0000Sarius Guile\u0000薩里烏斯·蓋爾\u0000Skrach Uglogwee\u0000史克拉奇·烏格洛威\u0000Skuli Myrka\u0000斯庫里·米卡\u0000"
+	+ "Slug Hemligssen\u0000史拉格·赫姆利森\u0000Smiddi Ryak\u0000斯米迪·瑞亞克\u0000Solus Dellagar\u0000索魯斯·德拉加\u0000Ta Quir Priw\u0000塔奎爾普里夫\u0000"
+	+ "Taverley (5,000)\u0000塔弗利\u0000Temp Stone 4 Zip\u0000臨時石頭 4 壓縮\u0000Toad batta\u0000蟾蜍薄餅\u0000Tz-Tok Jad\u0000茲-托克賈德\u0000"
+	+ "Ulsquire Shauncy\u0000烏爾斯奎爾·肖恩西\u0000Valantay Eppel\u0000瓦蘭泰伊·艾佩爾\u0000Vanescula Drakan\u0000凡妮絲庫拉·德拉肯\u0000Vanligga Gastfrihet\u0000凡利加·嘉斯特弗里赫特\u0000"
+	+ "Vertida Sefalatis\u0000維爾蒂達·塞法拉提斯\u0000Void seal(1)\u0000虛空封印(1)\u0000Void seal(2)\u0000虛空封印(2)\u0000Void seal(3)\u0000虛空封印(3)\u0000"
+	+ "Void seal(4)\u0000虛空封印(4)\u0000Void seal(5)\u0000虛空封印(5)\u0000Void seal(6)\u0000虛空封印(6)\u0000Void seal(7)\u0000虛空封印(7)\u0000"
+	+ "Void seal(8)\u0000虛空封印(8)\u0000With least obstruction\u0000阻礙最少\u0000Yanille (25,000)\u0000亞尼爾\u0000and utmost solemnity hold\u0000並以極度的莊嚴持有\u0000"
+	+ "doug hug'em\u0000達格·哈格姆\u0000hingerdinger lmao\u0000欣格丁格 笑死我了\u0000lebron james\u0000勒布朗·詹姆斯\u0000projectus spellicus avoir valius\u0000普羅傑克圖斯·史培利庫斯·艾佛·瓦利烏斯\u0000"
+	+ "the possessed with good\u0000擁有良善的附身者\u0000";
+
 	private static Map<String, String> MAP;
 
 	private static Map<String, String> map() {
@@ -821,6 +846,8 @@ public class NameTranslation {
 		{ String[] p = D240.split("\u0000");
 			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
 		{ String[] p = D241.split("\u0000");
+			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
+		{ String[] p = D_NAMES.split("\u0000");
 			for (int i = 0; i < p.length; i += 2) m.put(p[i], p[i+1]); }
 		// 地圖裸地名補充（Tutorial Island/Burthorpe/Yanille 等不在 D 表）
 		String[] extra = {
