@@ -585,11 +585,28 @@ public class CacheTranslation {
 	}
 
 	/** token fallback：依空白拆 token，能翻的翻、不能翻的保留原文（部分翻譯）。 */
+	private static final String[] CONNECTORS = {
+		"of", "the", "a", "an", "and", "to", "in", "on", "at", "for", "with",
+		"from", "by", "is", "are", "or", "as", "vs", "de", "di", "la", "el"
+	};
+
+	private static boolean isConnector(String w) {
+		String l = w.toLowerCase();
+		for (String c : CONNECTORS) {
+			if (l.equals(c)) return true;
+		}
+		return false;
+	}
+
+	/** token fallback：依空白拆 token，能翻的翻、不能翻的保留原文（部分翻譯）。
+	 *  阻斷式加固：若結果同時含中文與「非連接詞」的未翻譯英文詞（如「生物 of Fenkenstrain」、
+	 *  「The 宏偉的 Exchange」），判定為中英夾雜垃圾，放棄套用（回傳 null 保留原文）。 */
 	private static String translateTokens(String s) {
 		if (s.isEmpty() || s.indexOf(' ') < 0) return null;
 		String[] words = s.split(" ");
 		StringBuilder sb = new StringBuilder();
 		boolean any = false;
+		boolean hasUntranslatedContent = false;
 		for (String w : words) {
 			if (sb.length() > 0) sb.append(" ");
 			boolean hasLetter = false;
@@ -607,10 +624,14 @@ public class CacheTranslation {
 				if (containsCjk(tw)) any = true;
 			} else {
 				sb.append(w);
+				if (!isConnector(w)) hasUntranslatedContent = true;
 			}
 		}
 		// 至少翻出一個含中文的 token 才套用（避免把純英文的專有名詞拆成段落）
-		return any ? sb.toString() : null;
+		if (!any) return null;
+		// 阻斷式加固：中英夾雜（中文 + 未翻譯內容詞）→ 放棄，避免「生物 of Fenkenstrain」類垃圾
+		if (hasUntranslatedContent) return null;
+		return sb.toString();
 	}
 
 	private static final java.util.regex.Pattern CLASS_PAT = java.util.regex.Pattern.compile("^class (\\d+) (.+)$");
