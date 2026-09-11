@@ -913,6 +913,30 @@ public class NameTranslation {
 			"Deserted<br>Keep", "荒廢堡壘", "Jail", "監獄", "The Forgotten<br>Cemetery", "被遺忘的墓園",
 			"Gnome Ball<br>Field", "侏儒球場", "Gu'Tanoth", "古塔諾斯", "Market", "市場",
 			"Jiggig", "吉吉格", "Falconer", "訓鷹人", "Stealing Creation", "竊取創造",
+		
+			"Alfi Marino", "阿爾菲·馬里諾",
+			"Aris Maye", "艾瑞斯·梅伊",
+			"Charles Lyeman", "查爾斯·萊曼",
+			"Elsie Parks", "艾爾西·帕克斯",
+			"Enhtor Prysin", "恩托·普里辛",
+			"Ethel Prim", "艾瑟·普林",
+			"Fred Parks", "佛雷德·帕克斯",
+			"Gaffit Malore", "加菲特·馬洛",
+			"Hartwin Prim", "哈特溫·普林",
+			"Idonea Ramlock", "伊多尼亞·拉姆洛克",
+			"Iffie Nitter", "伊菲·尼特",
+			"Mabel Malore", "梅貝爾·馬洛",
+			"Phearthee Levalsyx", "費瑟·萊瓦爾希克斯",
+			"Thessalia Nitter", "賽莎莉亞·尼特",
+			"Trevick Ramlock", "特雷維克·拉姆洛克",
+			"Surok Magis", "蘇洛克·馬吉斯",
+			"Perfect Gold", "完美黃金",
+		
+			"TokTz-Xil-Ak", "托克茨-希爾-阿克",
+			"TokTz-Xil-Ek", "托克茨-希爾-艾克",
+			"Toktz-Mej-Tal", "托克茨-梅傑-塔爾",
+			"TzHaar-Ket-Em", "茲哈爾-凱特-艾姆",
+			"Tzhaar-Ket-Om", "茲哈爾-凱特-歐姆",
 		};
 		for (int i = 0; i < extra.length; i += 2) {
 			if (extra[i + 1] != null && !m.containsKey(extra[i])) {
