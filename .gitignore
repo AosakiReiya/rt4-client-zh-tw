@@ -5,3 +5,9 @@
 bin/
 build/
 dump/
+
+# 發佈組裝暫存（CI / 本地打包）
+dist/
+out/
+dl/
+in/

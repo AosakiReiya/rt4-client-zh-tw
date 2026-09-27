@@ -1,0 +1,141 @@
+name: Release client and singleplayer bundle
+
+# 打 tag（v*）即自動編譯並發佈 GitHub Release：
+#   - client-zh-tw.jar（+ sha256，沿用官方 rt4-client CI 慣例）
+#   - 一鍵離線單機包（win64 / linux64：client + server + cache + 漢化資料 + JRE + 啟動腳本）
+#
+# 單機包內含的 server-zh-tw.jar 取自 2009scape-zh-tw-server 的 latest release，
+# 因此發佈順序：先 server tag，再 client tag。
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+env:
+  SERVER_REPO: AosakiReiya/2009scape-zh-tw-server
+  # 官方單機版倉庫 zip（提供遊戲 cache 與 Windows JRE；不含汉化的 configs，由我方 server data 覆蓋）
+  OFFICIAL_SINGLEPLAYER_ZIP: https://gitlab.com/2009scape/singleplayer/windows/-/archive/master/windows-master.zip
+  # 與官方 Saradomin-Launcher 相同版本的 Linux JRE
+  LINUX_JRE_URL: https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.20%2B8/OpenJDK11U-jre_x64_linux_hotspot_11.0.20_8.tar.gz
+
+jobs:
+  client-jar:
+    name: Build client jar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Build
+        run: ./gradlew :client:build -x test -x javadoc --console=plain
+
+      - name: Stage asset
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          JAR="$(ls client/build/libs/client-*.jar | head -1)"
+          cp "$JAR" dist/client-zh-tw.jar
+          sha256sum dist/client-zh-tw.jar | awk '{print $1}' > dist/client-zh-tw.jar.sha256
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: client-jar
+          path: dist
+
+  singleplayer:
+    name: Bundle singleplayer (${{ matrix.os }})
+    needs: client-jar
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [win64, linux64]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch client jar
+        uses: actions/download-artifact@v4
+        with:
+          name: client-jar
+          path: in
+
+      - name: Fetch components
+        run: |
+          set -euo pipefail
+          mkdir -p dl
+          curl -fsSL -o dl/server-zh-tw.jar \
+            "https://github.com/$SERVER_REPO/releases/latest/download/server-zh-tw.jar"
+          curl -fsSL -o dl/server-data-zh-tw.zip \
+            "https://github.com/$SERVER_REPO/releases/latest/download/server-data-zh-tw.zip"
+          curl -fsSL -o dl/windows-master.zip "$OFFICIAL_SINGLEPLAYER_ZIP"
+          if [ "${{ matrix.os }}" = "linux64" ]; then
+            curl -fsSL -o dl/jre.tar.gz "$LINUX_JRE_URL"
+          fi
+
+      - name: Assemble bundle
+        run: |
+          set -euo pipefail
+          ZIP_NAME="2009scape-zh-tw-singleplayer-${{ matrix.os }}.zip"
+          mkdir -p out/game/data dl/x dl/srv
+          cp in/client-zh-tw.jar out/game/client.jar
+          cp dl/server-zh-tw.jar out/game/server.jar
+          cp bundle/config.json bundle/translations_client.tbl out/game/
+
+          # 漢化 configs / ObjectParser / worldprops（我方 server repo 版）
+          unzip -q dl/server-data-zh-tw.zip -d dl/srv
+          cp -r dl/srv/data/. out/game/data/
+          cp -r dl/srv/worldprops out/game/worldprops
+
+          # 遊戲 cache 與 botdata（取自官方單機包）
+          unzip -q dl/windows-master.zip 'windows-master/game/data/cache/*' 'windows-master/game/data/botdata/*' -d dl/x
+          cp -r dl/x/windows-master/game/data/cache out/game/data/cache
+          cp -r dl/x/windows-master/game/data/botdata out/game/data/botdata
+          mkdir -p out/game/data/logs out/game/data/players out/game/data/playerstats
+
+          # JRE 與啟動腳本
+          if [ "${{ matrix.os }}" = "win64" ]; then
+            unzip -q dl/windows-master.zip 'windows-master/jre/*' -d dl/x
+            cp -r dl/x/windows-master/jre out/jre
+            cp bundle/start-windows.bat out/start-game.bat
+          else
+            mkdir -p out/jre
+            tar xzf dl/jre.tar.gz -C out/jre --strip-components=1
+            cp bundle/start-linux.sh out/start-game.sh
+            chmod +x out/start-game.sh out/jre/bin/java
+          fi
+          cp bundle/README.txt out/README.txt
+
+          (cd out && zip -qry "../$ZIP_NAME" .)
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: singleplayer-${{ matrix.os }}
+          path: 2009scape-zh-tw-singleplayer-${{ matrix.os }}.zip
+
+  release:
+    name: Publish GitHub Release
+    needs: [client-jar, singleplayer]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: '*'
+          path: dist
+          merge-multiple: true
+
+      - name: Checksums and release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          (cd dist && sha256sum client-zh-tw.jar 2009scape-zh-tw-singleplayer-*.zip > checksums.txt)
+          gh release create "$GITHUB_REF_NAME" dist/* \
+            --title "2009scape-zh-tw 客戶端與單機版 $GITHUB_REF_NAME" \
+            --generate-notes
