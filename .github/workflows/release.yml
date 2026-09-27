@@ -111,7 +111,6 @@ jobs:
             chmod +x out/start-game.sh out/jre/bin/java
           fi
           cp bundle/README.txt out/README.txt
-
           (cd out && zip -qry "../$ZIP_NAME" .)
 
       - uses: actions/upload-artifact@v4
@@ -124,6 +123,7 @@ jobs:
     needs: [client-jar, singleplayer]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           pattern: '*'
